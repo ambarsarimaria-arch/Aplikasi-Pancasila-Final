@@ -3,407 +3,785 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pendidikan Pancasila Kelas 1 SD - Sekolah Tarakanita</title>
-    <!-- Tailwind CSS CDN -->
+    <title>Pendidikan Pancasila - Kelas 1 SD</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Google Fonts: Fredoka & Quicksand for kid-friendly aesthetics -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Fredoka & Lexend for fun, legible kids typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
-    <!-- Canvas Confetti for quiz rewards -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Lexend:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        brandRed: '#FF4B4B',
-                        brandYellow: '#FFC800',
-                        brandGreen: '#58CC02',
-                        brandBlue: '#1CB0F6',
-                        brandPurple: '#CE82FF',
-                        brandOrange: '#FF9600',
+                        brandPink: '#FF6B8B',
+                        brandYellow: '#FFD166',
+                        brandGreen: '#06D6A0',
+                        brandBlue: '#118AB2',
+                        brandPurple: '#8338EC',
+                        brandOrange: '#FF9F1C',
+                        tarakanitaRed: '#C0392B'
                     },
                     fontFamily: {
                         fredoka: ['Fredoka', 'sans-serif'],
-                        quicksand: ['Quicksand', 'sans-serif'],
+                        lexend: ['Lexend', 'sans-serif']
                     }
                 }
             }
         }
     </script>
+
     <style>
         body {
-            font-family: 'Quicksand', sans-serif;
-            background-color: #F0F9FF;
+            font-family: 'Lexend', sans-serif;
+            background: linear-gradient(135deg, #e0f2fe 0%, #fbcfe8 50%, #fef08a 100%);
+            min-height: 100vh;
         }
-        h1, h2, h3, h4, .font-title {
-            font-family: 'Fredoka', sans-serif;
+
+        .title-font {
+            font-family: 'Fredoka', cursive;
         }
-        .bounce-hover:hover {
-            transform: translateY(-4px) scale(1.02);
-            transition: all 0.2s ease-in-out;
+
+        /* Custom Bounce & Pop Animations */
+        .pop-card {
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-        .active-tab {
-            border-bottom: 4px solid #1CB0F6;
-            color: #1CB0F6;
-            font-weight: bold;
+        .pop-card:hover {
+            transform: translateY(-8px) scale(1.02);
+        }
+
+        .btn-bounce:active {
+            transform: scale(0.95);
+        }
+
+        /* Speech Bubble */
+        .speech-bubble {
+            position: relative;
+            background: #ffffff;
+            border-radius: .4em;
+        }
+        .speech-bubble:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 0;
+            height: 0;
+            border: 15px solid transparent;
+            border-right-color: #ffffff;
+            border-left: 0;
+            margin-top: -15px;
+            margin-left: -15px;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col text-slate-800 antialiased selection:bg-brandYellow">
+<body class="text-slate-800 pb-12">
 
-    <!-- Top Navbar -->
-    <header class="bg-white border-b-4 border-slate-200 sticky top-0 z-50 shadow-sm">
+    <!-- Top Header / Navigation -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md shadow-md border-b-4 border-yellow-400">
         <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchPage('home')">
-                <div class="w-12 h-12 rounded-2xl bg-brandRed text-white flex items-center justify-center font-bold text-2xl shadow-md">
-                    <i class="fa-solid fa-star"></i>
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="showSection('beranda')">
+                <div class="w-12 h-12 rounded-full bg-brandPink flex items-center justify-center text-white text-2xl font-bold shadow-md">
+                    <i class="fa-solid fa-heart"></i>
                 </div>
                 <div>
-                    <h1 class="text-xl md:text-2xl font-bold text-slate-800 leading-tight">Pendidikan Pancasila</h1>
-                    <p class="text-xs md:text-sm font-semibold text-brandBlue">Kelas 1 SD • Semester Ganjil</p>
+                    <h1 class="title-font text-xl md:text-2xl font-bold text-slate-800 tracking-wide leading-tight">
+                        Pendidikan Pancasila
+                    </h1>
+                    <span class="bg-yellow-300 text-yellow-900 text-xs font-bold px-2.5 py-0.5 rounded-full inline-block">
+                        Kelas 1 SD • Semester Ganjil
+                    </span>
                 </div>
             </div>
 
-            <!-- Top Right School Logo & Home Button -->
-            <div class="flex items-center space-x-3">
-                <button id="btn-home-nav" onclick="switchPage('home')" class="hidden sm:flex items-center space-x-2 bg-brandBlue hover:bg-sky-500 text-white px-4 py-2 rounded-xl font-bold text-sm shadow transition">
+            <div class="flex items-center space-x-2">
+                <button onclick="showSection('beranda')" class="btn-bounce bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-2xl font-bold flex items-center space-x-2 shadow-sm border-b-4 border-blue-700">
                     <i class="fa-solid fa-house"></i>
-                    <span>Beranda</span>
+                    <span class="hidden sm:inline">Beranda</span>
                 </button>
-                <div class="bg-slate-100 p-1 rounded-xl border border-slate-200 flex items-center shadow-inner">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlW5XwPhTaFrPdWZv-7Z-MGXxpddUawx4QVCRkET7D2Q&s=10" 
-                         alt="Logo Sekolah Tarakanita" 
-                         class="h-10 md:h-12 object-contain rounded-lg"
-                         onerror="this.src='https://placehold.co/100x100/FF4B4B/FFFFFF?text=Tarakanita'">
-                </div>
             </div>
         </div>
     </header>
 
     <!-- Main Container -->
-    <main class="flex-grow max-w-6xl w-full mx-auto px-4 py-6">
+    <main class="max-w-6xl mx-auto px-4 mt-6">
 
-        <!-- VIEW: HOME (BERANDA) -->
-        <section id="page-home" class="space-y-6">
-            <div class="bg-gradient-to-r from-brandBlue to-sky-400 rounded-3xl p-6 md:p-8 text-white shadow-xl relative overflow-hidden">
+        <!-- SECTION 0: BERANDA / HOME -->
+        <section id="sec-beranda" class="space-y-6">
+            <!-- Hero Banner -->
+            <div class="bg-gradient-to-r from-red-500 via-pink-500 to-purple-600 rounded-3xl p-6 md:p-8 text-white shadow-xl relative overflow-hidden border-4 border-white">
                 <div class="relative z-10 max-w-2xl">
-                    <span class="bg-white/20 text-white font-bold px-3 py-1 rounded-full text-xs uppercase tracking-wider">Selamat Datang Anak-Anak Hebat!</span>
-                    <h2 class="text-3xl md:text-4xl font-extrabold mt-2 mb-3">Mari Belajar Simbol & Pengamalan Pancasila 🇮🇩</h2>
-                    <p class="text-sky-100 text-sm md:text-base font-medium">Pilih salah satu menu di bawah ini untuk memulai petualangan belajarmu hari ini ya!</p>
+                    <div class="inline-block bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-sm font-semibold mb-3">
+                        ✨ Selamat Datang Anak-Anak Hebat!
+                    </div>
+                    <h2 class="title-font text-3xl md:text-5xl font-extrabold mb-3 leading-tight drop-shadow-md">
+                        Mari Belajar Pancasila Bersama! 🇮🇩
+                    </h2>
+                    <p class="text-white/95 text-base md:text-lg mb-4 font-medium">
+                        Pilih menu pembelajaran di bawah ini untuk mulai belajar dengan ceria dan menyenangkan!
+                    </p>
+                    <button onclick="speakText('Selamat datang di aplikasi Pendidikan Pancasila Kelas 1 SD. Silakan pilih menu di bawah ini!')" class="bg-yellow-400 hover:bg-yellow-300 text-slate-900 font-bold px-4 py-2 rounded-xl text-sm inline-flex items-center space-x-2 shadow-md">
+                        <i class="fa-solid fa-volume-high"></i>
+                        <span>Dengarkan Menyapa</span>
+                    </button>
                 </div>
-                <div class="absolute -right-6 -bottom-6 opacity-20 text-white text-9xl pointer-events-none">
-                    <i class="fa-solid fa-heart font-bold"></i>
+                <!-- Decorative Elements -->
+                <div class="absolute -right-6 -bottom-8 opacity-20 md:opacity-30 text-9xl">
+                    <i class="fa-solid fa-star"></i>
                 </div>
             </div>
 
-            <!-- 7 Grid Buttons -->
+            <!-- Grid of 7 Buttons -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                 
                 <!-- Button 1: Identitas Kelas -->
-                <button onclick="switchPage('identitas')" class="bounce-hover bg-white border-2 border-slate-200 hover:border-brandBlue p-5 rounded-3xl shadow-md text-left flex flex-col justify-between group">
-                    <div class="flex items-center justify-between mb-3">
-                        <div class="w-14 h-14 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center text-2xl font-bold">
+                <div onclick="showSection('identitas')" class="pop-card cursor-pointer bg-white rounded-3xl p-5 border-4 border-blue-300 shadow-lg hover:shadow-2xl relative overflow-hidden group">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-16 h-16 rounded-2xl bg-blue-500 text-white flex items-center justify-center text-3xl shadow-md group-hover:rotate-12 transition-transform">
                             <i class="fa-solid fa-id-card"></i>
                         </div>
-                        <span class="bg-amber-100 text-amber-700 font-bold text-xs px-2.5 py-1 rounded-full">Menu 1</span>
+                        <div>
+                            <span class="text-xs font-bold text-blue-500 uppercase tracking-wider">Menu 1</span>
+                            <h3 class="title-font text-xl font-bold text-slate-800">Identitas Kelas</h3>
+                            <p class="text-xs text-slate-500 mt-0.5">Informasi pembelajaran & CP/TP</p>
+                        </div>
                     </div>
-                    <div>
-                        <h3 class="text-lg font-bold text-slate-800 group-hover:text-brandBlue transition">Identitas Kelas</h3>
-                        <p class="text-xs text-slate-500 mt-1">Informasi jenjang, mata pelajaran, capaian & nilai Tarakanita.</p>
-                    </div>
-                </button>
+                </div>
 
                 <!-- Button 2: Simbol Pancasila -->
-                <button onclick="switchPage('simbol')" class="bounce-hover bg-white border-2 border-slate-200 hover:border-brandRed p-5 rounded-3xl shadow-md text-left flex flex-col justify-between group">
-                    <div class="flex items-center justify-between mb-3">
-                        <div class="w-14 h-14 rounded-2xl bg-red-100 text-brandRed flex items-center justify-center text-2xl font-bold">
+                <div onclick="showSection('simbol')" class="pop-card cursor-pointer bg-white rounded-3xl p-5 border-4 border-yellow-300 shadow-lg hover:shadow-2xl relative overflow-hidden group">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-16 h-16 rounded-2xl bg-yellow-400 text-amber-900 flex items-center justify-center text-3xl shadow-md group-hover:rotate-12 transition-transform">
                             <i class="fa-solid fa-shield-halved"></i>
                         </div>
-                        <span class="bg-red-100 text-brandRed font-bold text-xs px-2.5 py-1 rounded-full">Menu 2</span>
+                        <div>
+                            <span class="text-xs font-bold text-yellow-600 uppercase tracking-wider">Menu 2</span>
+                            <h3 class="title-font text-xl font-bold text-slate-800">Simbol Pancasila</h3>
+                            <p class="text-xs text-slate-500 mt-0.5">Mengenal 5 lambang & bunyi sila</p>
+                        </div>
                     </div>
-                    <div>
-                        <h3 class="text-lg font-bold text-slate-800 group-hover:text-brandRed transition">Simbol Pancasila</h3>
-                        <p class="text-xs text-slate-500 mt-1">Mengenal nama simbol, gambar, dan bunyi 5 Sila Pancasila.</p>
-                    </div>
-                </button>
+                </div>
 
                 <!-- Button 3: Pengamalan Pancasila -->
-                <button onclick="switchPage('pengamalan')" class="bounce-hover bg-white border-2 border-slate-200 hover:border-brandGreen p-5 rounded-3xl shadow-md text-left flex flex-col justify-between group">
-                    <div class="flex items-center justify-between mb-3">
-                        <div class="w-14 h-14 rounded-2xl bg-green-100 text-brandGreen flex items-center justify-center text-2xl font-bold">
-                            <i class="fa-solid fa-hands-holding-child"></i>
+                <div onclick="showSection('pengamalan')" class="pop-card cursor-pointer bg-white rounded-3xl p-5 border-4 border-red-300 shadow-lg hover:shadow-2xl relative overflow-hidden group">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-16 h-16 rounded-2xl bg-red-500 text-white flex items-center justify-center text-3xl shadow-md group-hover:rotate-12 transition-transform">
+                            <i class="fa-solid fa-hand-holding-heart"></i>
                         </div>
-                        <span class="bg-green-100 text-brandGreen font-bold text-xs px-2.5 py-1 rounded-full">Menu 3</span>
+                        <div>
+                            <span class="text-xs font-bold text-red-500 uppercase tracking-wider">Menu 3</span>
+                            <h3 class="title-font text-xl font-bold text-slate-800">Pengamalan Pancasila</h3>
+                            <p class="text-xs text-slate-500 mt-0.5">Contoh sikap baik sehari-hari</p>
+                        </div>
                     </div>
-                    <div>
-                        <h3 class="text-lg font-bold text-slate-800 group-hover:text-brandGreen transition">Pengamalan Pancasila</h3>
-                        <p class="text-xs text-slate-500 mt-1">Contoh perbuatan baik sehari-hari dilengkapi fitur audio suara.</p>
-                    </div>
-                </button>
+                </div>
 
-                <!-- Button 4: Nilai - Nilai Tarakanita -->
-                <button onclick="switchPage('tarakanita')" class="bounce-hover bg-white border-2 border-slate-200 hover:border-brandPurple p-5 rounded-3xl shadow-md text-left flex flex-col justify-between group">
-                    <div class="flex items-center justify-between mb-3">
-                        <div class="w-14 h-14 rounded-2xl bg-purple-100 text-brandPurple flex items-center justify-center text-2xl font-bold">
-                            <i class="fa-solid fa-ribbon"></i>
+                <!-- Button 4: Nilai-Nilai Tarakanita -->
+                <div onclick="showSection('tarakanita')" class="pop-card cursor-pointer bg-white rounded-3xl p-5 border-4 border-purple-300 shadow-lg hover:shadow-2xl relative overflow-hidden group">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-16 h-16 rounded-2xl bg-purple-600 text-white flex items-center justify-center text-3xl shadow-md group-hover:rotate-12 transition-transform">
+                            <i class="fa-solid fa-award"></i>
                         </div>
-                        <span class="bg-purple-100 text-brandPurple font-bold text-xs px-2.5 py-1 rounded-full">Menu 4</span>
+                        <div>
+                            <span class="text-xs font-bold text-purple-600 uppercase tracking-wider">Menu 4</span>
+                            <h3 class="title-font text-xl font-bold text-slate-800">Nilai-Nilai Tarakanita</h3>
+                            <p class="text-xs text-slate-500 mt-0.5">Compassion, Competence, Community</p>
+                        </div>
                     </div>
-                    <div>
-                        <h3 class="text-lg font-bold text-slate-800 group-hover:text-brandPurple transition">Nilai-Nilai Tarakanita</h3>
-                        <p class="text-xs text-slate-500 mt-1">Penerapan nilai Compassion, Competence, & Community.</p>
-                    </div>
-                </button>
+                </div>
 
                 <!-- Button 5: Video Pembelajaran -->
-                <button onclick="switchPage('video')" class="bounce-hover bg-white border-2 border-slate-200 hover:border-rose-500 p-5 rounded-3xl shadow-md text-left flex flex-col justify-between group">
-                    <div class="flex items-center justify-between mb-3">
-                        <div class="w-14 h-14 rounded-2xl bg-rose-100 text-rose-500 flex items-center justify-center text-2xl font-bold">
+                <div onclick="showSection('video')" class="pop-card cursor-pointer bg-white rounded-3xl p-5 border-4 border-emerald-300 shadow-lg hover:shadow-2xl relative overflow-hidden group">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-16 h-16 rounded-2xl bg-emerald-500 text-white flex items-center justify-center text-3xl shadow-md group-hover:rotate-12 transition-transform">
                             <i class="fa-solid fa-circle-play"></i>
                         </div>
-                        <span class="bg-rose-100 text-rose-600 font-bold text-xs px-2.5 py-1 rounded-full">Menu 5</span>
+                        <div>
+                            <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">Menu 5</span>
+                            <h3 class="title-font text-xl font-bold text-slate-800">Video Pembelajaran</h3>
+                            <p class="text-xs text-slate-500 mt-0.5">Nonton video cerita seru</p>
+                        </div>
                     </div>
-                    <div>
-                        <h3 class="text-lg font-bold text-slate-800 group-hover:text-rose-500 transition">Video Pembelajaran</h3>
-                        <p class="text-xs text-slate-500 mt-1">Nonton video edukasi seru penerapan Pancasila sehari-hari.</p>
-                    </div>
-                </button>
+                </div>
 
                 <!-- Button 6: Latihan Soal Linuris -->
-                <button onclick="switchPage('linuris')" class="bounce-hover bg-white border-2 border-slate-200 hover:border-brandOrange p-5 rounded-3xl shadow-md text-left flex flex-col justify-between group">
-                    <div class="flex items-center justify-between mb-3">
-                        <div class="w-14 h-14 rounded-2xl bg-orange-100 text-brandOrange flex items-center justify-center text-2xl font-bold">
+                <div onclick="showSection('linuris')" class="pop-card cursor-pointer bg-white rounded-3xl p-5 border-4 border-orange-300 shadow-lg hover:shadow-2xl relative overflow-hidden group">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-16 h-16 rounded-2xl bg-orange-500 text-white flex items-center justify-center text-3xl shadow-md group-hover:rotate-12 transition-transform">
                             <i class="fa-solid fa-pen-ruler"></i>
                         </div>
-                        <span class="bg-orange-100 text-brandOrange font-bold text-xs px-2.5 py-1 rounded-full">Menu 6</span>
+                        <div>
+                            <span class="text-xs font-bold text-orange-500 uppercase tracking-wider">Menu 6</span>
+                            <h3 class="title-font text-xl font-bold text-slate-800">Latihan Soal Linuris</h3>
+                            <p class="text-xs text-slate-500 mt-0.5">Literasi, Numerasi & Riset</p>
+                        </div>
                     </div>
-                    <div>
-                        <h3 class="text-lg font-bold text-slate-800 group-hover:text-brandOrange transition">Latihan Soal Linuris</h3>
-                        <p class="text-xs text-slate-500 mt-1">Soal Literasi, Numerasi, dan Tabel Kegiatan Riset Siswa.</p>
-                    </div>
-                </button>
+                </div>
 
-                <!-- Button 7: Latihan Pembelajaran -->
-                <button onclick="switchPage('blooket')" class="bounce-hover bg-white border-2 border-slate-200 hover:border-teal-500 p-5 rounded-3xl shadow-md text-left flex flex-col justify-between group sm:col-span-2 lg:col-span-1">
-                    <div class="flex items-center justify-between mb-3">
-                        <div class="w-14 h-14 rounded-2xl bg-teal-100 text-teal-600 flex items-center justify-center text-2xl font-bold">
+                <!-- Button 7: Latihan Pembelajaran (Blooket) -->
+                <div onclick="showSection('blooket')" class="pop-card cursor-pointer bg-white rounded-3xl p-5 border-4 border-pink-300 shadow-lg hover:shadow-2xl relative overflow-hidden group sm:col-span-2 lg:col-span-1">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-16 h-16 rounded-2xl bg-pink-500 text-white flex items-center justify-center text-3xl shadow-md group-hover:rotate-12 transition-transform">
                             <i class="fa-solid fa-gamepad"></i>
                         </div>
-                        <span class="bg-teal-100 text-teal-700 font-bold text-xs px-2.5 py-1 rounded-full">Menu 7</span>
+                        <div>
+                            <span class="text-xs font-bold text-pink-500 uppercase tracking-wider">Menu 7</span>
+                            <h3 class="title-font text-xl font-bold text-slate-800">Latihan Pembelajaran</h3>
+                            <p class="text-xs text-slate-500 mt-0.5">Kuis Blooket Interaktif!</p>
+                        </div>
                     </div>
-                    <div>
-                        <h3 class="text-lg font-bold text-slate-800 group-hover:text-teal-600 transition">Latihan Pembelajaran</h3>
-                        <p class="text-xs text-slate-500 mt-1">Bermain kuis interaktif di Blooket bersama teman-teman.</p>
-                    </div>
-                </button>
+                </div>
 
             </div>
         </section>
 
-        <!-- VIEW: BUTTON 1 - IDENTITAS KELAS -->
-        <section id="page-identitas" class="hidden space-y-6">
-            <div class="flex items-center justify-between bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
-                <button onclick="switchPage('home')" class="text-slate-600 hover:text-brandBlue font-bold flex items-center space-x-2">
-                    <i class="fa-solid fa-arrow-left"></i>
-                    <span>Kembali ke Beranda</span>
+        <!-- SECTION 1: IDENTITAS KELAS -->
+        <section id="sec-identitas" class="hidden space-y-6">
+            <div class="flex items-center justify-between">
+                <button onclick="showSection('beranda')" class="text-slate-600 hover:text-blue-600 font-bold text-sm flex items-center space-x-2">
+                    <i class="fa-solid fa-arrow-left"></i> <span>Kembali ke Beranda</span>
                 </button>
-                <span class="font-bold text-amber-600 bg-amber-50 px-3 py-1 rounded-full text-xs border border-amber-200">Identitas Kelas</span>
+                <span class="bg-blue-100 text-blue-800 font-bold text-xs px-3 py-1 rounded-full">Menu 1</span>
             </div>
 
-            <div class="bg-white rounded-3xl p-6 md:p-8 shadow-md border border-slate-200 space-y-6">
-                <div class="border-b pb-4">
-                    <h2 class="text-2xl md:text-3xl font-extrabold text-slate-800 flex items-center gap-3">
-                        <i class="fa-solid fa-graduation-cap text-brandYellow"></i>
-                        Identitas Pembelajaran
+            <div class="bg-white rounded-3xl p-6 md:p-8 shadow-xl border-4 border-blue-400 space-y-6">
+                <div class="border-b-2 border-slate-100 pb-4">
+                    <h2 class="title-font text-3xl font-extrabold text-blue-600 flex items-center space-x-3">
+                        <i class="fa-solid fa-id-card"></i>
+                        <span>Identitas Kelas & Program</span>
                     </h2>
-                    <p class="text-slate-500 text-sm mt-1">Informasi umum kurikulum Pendidikan Pancasila Kelas 1 SD</p>
+                    <p class="text-slate-500 text-sm mt-1">Informasi lengkap perangkat pembelajaran Pendidikan Pancasila</p>
                 </div>
 
-                <!-- Basic Info Cards Grid -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <div class="bg-blue-50 p-4 rounded-2xl border border-blue-100">
-                        <p class="text-xs text-blue-600 font-bold uppercase">Jenjang Kelas</p>
-                        <p class="text-xl font-extrabold text-blue-900 mt-1">Kelas 1 SD</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-blue-50 p-4 rounded-2xl border border-blue-200">
+                        <span class="text-xs font-bold text-blue-600 uppercase">Jenjang Kelas</span>
+                        <p class="title-font text-lg font-bold text-slate-800">Kelas 1 SD</p>
                     </div>
-                    <div class="bg-green-50 p-4 rounded-2xl border border-green-100">
-                        <p class="text-xs text-green-600 font-bold uppercase">Semester</p>
-                        <p class="text-xl font-extrabold text-green-900 mt-1">Ganjil</p>
+
+                    <div class="bg-emerald-50 p-4 rounded-2xl border border-emerald-200">
+                        <span class="text-xs font-bold text-emerald-600 uppercase">Semester</span>
+                        <p class="title-font text-lg font-bold text-slate-800">Ganjil</p>
                     </div>
-                    <div class="bg-purple-50 p-4 rounded-2xl border border-purple-100">
-                        <p class="text-xs text-purple-600 font-bold uppercase">Mata Pelajaran</p>
-                        <p class="text-lg font-extrabold text-purple-900 mt-1">Pendidikan Pancasila</p>
+
+                    <div class="bg-yellow-50 p-4 rounded-2xl border border-yellow-200">
+                        <span class="text-xs font-bold text-yellow-600 uppercase">Mata Pelajaran</span>
+                        <p class="title-font text-lg font-bold text-slate-800">Pendidikan Pancasila</p>
                     </div>
-                    <div class="bg-amber-50 p-4 rounded-2xl border border-amber-100">
-                        <p class="text-xs text-amber-600 font-bold uppercase">Materi Pokok</p>
-                        <p class="text-sm font-extrabold text-amber-900 mt-1">Bunyi, Simbol, & Pengamalan Pancasila</p>
+
+                    <div class="bg-purple-50 p-4 rounded-2xl border border-purple-200">
+                        <span class="text-xs font-bold text-purple-600 uppercase">Materi Pokok</span>
+                        <p class="title-font text-lg font-bold text-slate-800">Bunyi, Simbol, dan Pengamalan Pancasila</p>
                     </div>
                 </div>
 
-                <!-- Learning Objectives -->
-                <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200">
-                    <h3 class="text-lg font-bold text-slate-800 mb-3 flex items-center gap-2">
-                        <i class="fa-solid fa-bullseye text-brandRed"></i>
-                        Tujuan Pembelajaran (TP)
+                <!-- Tujuan Pembelajaran -->
+                <div class="bg-amber-50 rounded-2xl p-5 border-2 border-amber-200 space-y-3">
+                    <h3 class="title-font text-xl font-bold text-amber-800 flex items-center space-x-2">
+                        <i class="fa-solid fa-bullseye"></i>
+                        <span>Tujuan Pembelajaran (TP)</span>
                     </h3>
-                    <ul class="space-y-2">
-                        <li class="flex items-start gap-2 bg-white p-3 rounded-xl border border-slate-200">
-                            <span class="bg-brandBlue text-white font-bold text-xs px-2 py-0.5 rounded-md mt-0.5">1.2</span>
-                            <span class="text-sm text-slate-700 font-semibold">Menyebutkan bunyi sila-sila Pancasila beserta maknanya.</span>
+                    <ul class="space-y-2 text-slate-700 text-sm md:text-base font-medium">
+                        <li class="flex items-start space-x-2">
+                            <span class="bg-amber-400 text-white rounded-full text-xs px-2 py-0.5 mt-0.5 font-bold">1.2</span>
+                            <span>Menyebutkan bunyi sila-sila Pancasila beserta maknanya.</span>
                         </li>
-                        <li class="flex items-start gap-2 bg-white p-3 rounded-xl border border-slate-200">
-                            <span class="bg-brandBlue text-white font-bold text-xs px-2 py-0.5 rounded-md mt-0.5">1.3</span>
-                            <span class="text-sm text-slate-700 font-semibold">Menceritakan penerapan sila-sila Pancasila.</span>
+                        <li class="flex items-start space-x-2">
+                            <span class="bg-amber-400 text-white rounded-full text-xs px-2 py-0.5 mt-0.5 font-bold">1.3</span>
+                            <span>Menceritakan penerapan sila-sila Pancasila dalam kehidupan sehari-hari.</span>
                         </li>
                     </ul>
                 </div>
 
-                <!-- Tarakanita Values & Integration -->
+                <!-- Nilai Ketarakanitaan & Integrasi -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="bg-purple-50 p-5 rounded-2xl border border-purple-200">
-                        <h3 class="text-base font-bold text-purple-900 mb-2 flex items-center gap-2">
-                            <i class="fa-solid fa-heart text-brandPurple"></i>
-                            Nilai-Nilai Ketarakanitaan
-                        </h3>
-                        <div class="flex flex-wrap gap-2 mt-3">
-                            <span class="bg-white text-purple-800 font-bold text-xs px-3 py-1.5 rounded-xl border border-purple-200 shadow-sm">Competence</span>
-                            <span class="bg-white text-purple-800 font-bold text-xs px-3 py-1.5 rounded-xl border border-purple-200 shadow-sm">Compassion</span>
-                            <span class="bg-white text-purple-800 font-bold text-xs px-3 py-1.5 rounded-xl border border-purple-200 shadow-sm">Community</span>
+                    <div class="bg-red-50 rounded-2xl p-5 border-2 border-red-200 space-y-2">
+                        <h4 class="title-font text-lg font-bold text-red-700 flex items-center space-x-2">
+                            <i class="fa-solid fa-heart"></i>
+                            <span>Nilai-Nilai Ketarakanitaan</span>
+                        </h4>
+                        <div class="flex flex-wrap gap-2 pt-1">
+                            <span class="bg-red-500 text-white font-bold text-xs px-3 py-1 rounded-full shadow-sm">Competence</span>
+                            <span class="bg-pink-500 text-white font-bold text-xs px-3 py-1 rounded-full shadow-sm">Compassion</span>
+                            <span class="bg-purple-500 text-white font-bold text-xs px-3 py-1 rounded-full shadow-sm">Community</span>
                         </div>
                     </div>
 
-                    <div class="bg-orange-50 p-5 rounded-2xl border border-orange-200">
-                        <h3 class="text-base font-bold text-orange-900 mb-2 flex items-center gap-2">
-                            <i class="fa-solid fa-cubes text-brandOrange"></i>
-                            Pembelajaran Terintegrasi
-                        </h3>
-                        <div class="flex flex-wrap gap-2 mt-3">
-                            <span class="bg-white text-orange-800 font-bold text-xs px-3 py-1.5 rounded-xl border border-orange-200 shadow-sm">Literasi</span>
-                            <span class="bg-white text-orange-800 font-bold text-xs px-3 py-1.5 rounded-xl border border-orange-200 shadow-sm">Numerasi</span>
-                            <span class="bg-white text-orange-800 font-bold text-xs px-3 py-1.5 rounded-xl border border-orange-200 shadow-sm">Riset</span>
+                    <div class="bg-indigo-50 rounded-2xl p-5 border-2 border-indigo-200 space-y-2">
+                        <h4 class="title-font text-lg font-bold text-indigo-700 flex items-center space-x-2">
+                            <i class="fa-solid fa-diagram-project"></i>
+                            <span>Pembelajaran Terintegrasi</span>
+                        </h4>
+                        <div class="flex flex-wrap gap-2 pt-1">
+                            <span class="bg-blue-600 text-white font-bold text-xs px-3 py-1 rounded-full shadow-sm">Literasi</span>
+                            <span class="bg-emerald-600 text-white font-bold text-xs px-3 py-1 rounded-full shadow-sm">Numerasi</span>
+                            <span class="bg-orange-500 text-white font-bold text-xs px-3 py-1 rounded-full shadow-sm">Riset</span>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- VIEW: BUTTON 2 - SIMBOL PANCASILA -->
-        <section id="page-simbol" class="hidden space-y-6">
-            <div class="flex items-center justify-between bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
-                <button onclick="switchPage('home')" class="text-slate-600 hover:text-brandBlue font-bold flex items-center space-x-2">
-                    <i class="fa-solid fa-arrow-left"></i>
-                    <span>Kembali ke Beranda</span>
+        <!-- SECTION 2: SIMBOL PANCASILA -->
+        <section id="sec-simbol" class="hidden space-y-6">
+            <div class="flex items-center justify-between">
+                <button onclick="showSection('beranda')" class="text-slate-600 hover:text-blue-600 font-bold text-sm flex items-center space-x-2">
+                    <i class="fa-solid fa-arrow-left"></i> <span>Kembali ke Beranda</span>
                 </button>
-                <span class="font-bold text-brandRed bg-red-50 px-3 py-1 rounded-full text-xs border border-red-200">Simbol Pancasila</span>
+                <span class="bg-yellow-100 text-yellow-800 font-bold text-xs px-3 py-1 rounded-full">Menu 2</span>
             </div>
 
-            <div class="bg-white rounded-3xl p-6 md:p-8 shadow-md border border-slate-200 space-y-6">
+            <div class="bg-white rounded-3xl p-6 md:p-8 shadow-xl border-4 border-yellow-400 space-y-6">
                 <div>
-                    <h2 class="text-2xl md:text-3xl font-extrabold text-slate-800 flex items-center gap-3">
-                        <i class="fa-solid fa-shield-cat text-brandRed"></i>
-                        Mengenal Simbol & Bunyi Pancasila
+                    <h2 class="title-font text-3xl font-extrabold text-amber-600 flex items-center space-x-3">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <span>Mengenal Simbol & Bunyi Sila Pancasila</span>
                     </h2>
-                    <p class="text-slate-500 text-sm mt-1">Tekan tombol audio untuk mendengarkan bunyi setiap sila Pancasila!</p>
+                    <p class="text-slate-500 text-sm mt-1">Klik tombol suara 🔊 untuk mendengarkan bunyi setiap sila!</p>
                 </div>
 
-                <!-- 5 Sila Cards -->
                 <div class="space-y-4">
-                    
                     <!-- Sila 1 -->
-                    <div class="bg-amber-50/70 rounded-2xl p-5 border-2 border-amber-200 flex flex-col md:flex-row items-center gap-5">
+                    <div class="bg-yellow-50 rounded-2xl p-4 md:p-5 border-2 border-yellow-300 flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6">
                         <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/6/69/Pancasila_Sila_1_Star.svg/3840px-Pancasila_Sila_1_Star.svg.png?utm_source=id.wikipedia.org&utm_campaign=index&utm_content=thumbnail" 
                              alt="Sila 1 Bintang" 
-                             class="w-24 h-24 object-contain bg-white p-2 rounded-xl border border-amber-200 shadow-sm"
-                             onerror="this.src='https://placehold.co/150x150/FFC800/FFFFFF?text=Bintang'">
-                        <div class="flex-grow text-center md:text-left">
-                            <span class="bg-amber-500 text-white font-bold text-xs px-3 py-1 rounded-full">Sila Ke-1</span>
-                            <h3 class="text-xl font-extrabold text-amber-950 mt-1">Simbol: Bintang</h3>
-                            <p class="text-base font-bold text-slate-800 mt-2 bg-white p-3 rounded-xl border border-amber-200 shadow-sm">
-                                "Ketuhanan Yang Maha Esa"
-                            </p>
+                             class="w-28 h-28 object-contain bg-white rounded-2xl p-2 shadow-sm border border-yellow-200"
+                             onerror="this.src='https://placehold.co/150x150/fde047/854d0e?text=Bintang'">
+                        <div class="flex-1 text-center md:text-left space-y-2">
+                            <span class="bg-yellow-400 text-yellow-950 text-xs font-bold px-3 py-1 rounded-full uppercase">Sila Ke-1 • Bintang</span>
+                            <h3 class="title-font text-xl md:text-2xl font-bold text-slate-800">"Ketuhanan Yang Maha Esa"</h3>
+                            <p class="text-xs md:text-sm text-slate-600">Simbol bintang emas menggambarkan cahaya kerohanian bagi seluruh manusia.</p>
                         </div>
-                        <button onclick="speakText('Sila Pertama: Ketuhanan Yang Maha Esa. Simbolnya adalah Bintang.')" class="bg-amber-500 hover:bg-amber-600 text-white px-4 py-3 rounded-2xl font-bold flex items-center gap-2 shadow-md hover:scale-105 transition">
-                            <i class="fa-solid fa-volume-high text-lg"></i>
+                        <button onclick="speakText('Sila pertama. Ketuhanan Yang Maha Esa. Simbolnya adalah Bintang.')" class="bg-yellow-400 hover:bg-yellow-500 text-yellow-950 font-bold px-4 py-2 rounded-xl text-sm flex items-center space-x-2 shadow-md btn-bounce">
+                            <i class="fa-solid fa-volume-high"></i>
                             <span>Dengarkan</span>
                         </button>
                     </div>
 
                     <!-- Sila 2 -->
-                    <div class="bg-rose-50/70 rounded-2xl p-5 border-2 border-rose-200 flex flex-col md:flex-row items-center gap-5">
+                    <div class="bg-red-50 rounded-2xl p-4 md:p-5 border-2 border-red-300 flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6">
                         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStmY4DNJkQEEUUCDLfJkh0RXiLVf7_tQcDsf51-MD8ffenfUV1StpSyRK3&s=10" 
                              alt="Sila 2 Rantai" 
-                             class="w-24 h-24 object-contain bg-white p-2 rounded-xl border border-rose-200 shadow-sm"
-                             onerror="this.src='https://placehold.co/150x150/FF4B4B/FFFFFF?text=Rantai'">
-                        <div class="flex-grow text-center md:text-left">
-                            <span class="bg-brandRed text-white font-bold text-xs px-3 py-1 rounded-full">Sila Ke-2</span>
-                            <h3 class="text-xl font-extrabold text-rose-950 mt-1">Simbol: Rantai Emas</h3>
-                            <p class="text-base font-bold text-slate-800 mt-2 bg-white p-3 rounded-xl border border-rose-200 shadow-sm">
-                                "Kemanusiaan yang Adil dan Beradab"
-                            </p>
+                             class="w-28 h-28 object-contain bg-white rounded-2xl p-2 shadow-sm border border-red-200"
+                             onerror="this.src='https://placehold.co/150x150/fca5a5/991b1b?text=Rantai'">
+                        <div class="flex-1 text-center md:text-left space-y-2">
+                            <span class="bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase">Sila Ke-2 • Rantai</span>
+                            <h3 class="title-font text-xl md:text-2xl font-bold text-slate-800">"Kemanusiaan yang Adil dan Beradab"</h3>
+                            <p class="text-xs md:text-sm text-slate-600">Mata rantai bersambung artinya manusia saling membutuhkan dan bantu membantu.</p>
                         </div>
-                        <button onclick="speakText('Sila Kedua: Kemanusiaan yang Adil dan Beradab. Simbolnya adalah Rantai Emas.')" class="bg-brandRed hover:bg-red-600 text-white px-4 py-3 rounded-2xl font-bold flex items-center gap-2 shadow-md hover:scale-105 transition">
-                            <i class="fa-solid fa-volume-high text-lg"></i>
+                        <button onclick="speakText('Sila kedua. Kemanusiaan yang adil dan beradab. Simbolnya adalah Rantai.')" class="bg-red-500 hover:bg-red-600 text-white font-bold px-4 py-2 rounded-xl text-sm flex items-center space-x-2 shadow-md btn-bounce">
+                            <i class="fa-solid fa-volume-high"></i>
                             <span>Dengarkan</span>
                         </button>
                     </div>
 
                     <!-- Sila 3 -->
-                    <div class="bg-emerald-50/70 rounded-2xl p-5 border-2 border-emerald-200 flex flex-col md:flex-row items-center gap-5">
+                    <div class="bg-emerald-50 rounded-2xl p-4 md:p-5 border-2 border-emerald-300 flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6">
                         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJZfLVR7Kp1hYsX_eccuUN8_TPHjMR4C8Eky72XaLlkKdGhK7xClIRdYs&s=10" 
                              alt="Sila 3 Pohon Beringin" 
-                             class="w-24 h-24 object-contain bg-white p-2 rounded-xl border border-emerald-200 shadow-sm"
-                             onerror="this.src='https://placehold.co/150x150/58CC02/FFFFFF?text=Pohon+Beringin'">
-                        <div class="flex-grow text-center md:text-left">
-                            <span class="bg-brandGreen text-white font-bold text-xs px-3 py-1 rounded-full">Sila Ke-3</span>
-                            <h3 class="text-xl font-extrabold text-emerald-950 mt-1">Simbol: Pohon Beringin</h3>
-                            <p class="text-base font-bold text-slate-800 mt-2 bg-white p-3 rounded-xl border border-emerald-200 shadow-sm">
-                                "Persatuan Indonesia"
-                            </p>
+                             class="w-28 h-28 object-contain bg-white rounded-2xl p-2 shadow-sm border border-emerald-200"
+                             onerror="this.src='https://placehold.co/150x150/6ee7b7/065f46?text=Pohon+Beringin'">
+                        <div class="flex-1 text-center md:text-left space-y-2">
+                            <span class="bg-emerald-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase">Sila Ke-3 • Pohon Beringin</span>
+                            <h3 class="title-font text-xl md:text-2xl font-bold text-slate-800">"Persatuan Indonesia"</h3>
+                            <p class="text-xs md:text-sm text-slate-600">Pohon beringin rindang sebagai tempat berteduh seluruh rakyat Indonesia.</p>
                         </div>
-                        <button onclick="speakText('Sila Ketiga: Persatuan Indonesia. Simbolnya adalah Pohon Beringin.')" class="bg-brandGreen hover:bg-emerald-600 text-white px-4 py-3 rounded-2xl font-bold flex items-center gap-2 shadow-md hover:scale-105 transition">
-                            <i class="fa-solid fa-volume-high text-lg"></i>
+                        <button onclick="speakText('Sila ketiga. Persatuan Indonesia. Simbolnya adalah Pohon Beringin.')" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-4 py-2 rounded-xl text-sm flex items-center space-x-2 shadow-md btn-bounce">
+                            <i class="fa-solid fa-volume-high"></i>
                             <span>Dengarkan</span>
                         </button>
                     </div>
 
                     <!-- Sila 4 -->
-                    <div class="bg-sky-50/70 rounded-2xl p-5 border-2 border-sky-200 flex flex-col md:flex-row items-center gap-5">
+                    <div class="bg-slate-100 rounded-2xl p-4 md:p-5 border-2 border-slate-300 flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6">
                         <img src="https://cdn.shopify.com/s/files/1/0428/0965/5452/files/620b3bcd72695.jpg?v=1662911379" 
                              alt="Sila 4 Kepala Banteng" 
-                             class="w-24 h-24 object-contain bg-white p-2 rounded-xl border border-sky-200 shadow-sm"
-                             onerror="this.src='https://placehold.co/150x150/1CB0F6/FFFFFF?text=Kepala+Banteng'">
-                        <div class="flex-grow text-center md:text-left">
-                            <span class="bg-brandBlue text-white font-bold text-xs px-3 py-1 rounded-full">Sila Ke-4</span>
-                            <h3 class="text-xl font-extrabold text-sky-950 mt-1">Simbol: Kepala Banteng</h3>
-                            <p class="text-base font-bold text-slate-800 mt-2 bg-white p-3 rounded-xl border border-sky-200 shadow-sm">
-                                "Kerakyatan yang Dipimpin oleh Hikmat Kebijaksanaan dalam Permusyawaratan/Perwakilan"
-                            </p>
+                             class="w-28 h-28 object-contain bg-white rounded-2xl p-2 shadow-sm border border-slate-300"
+                             onerror="this.src='https://placehold.co/150x150/94a3b8/1e293b?text=Kepala+Banteng'">
+                        <div class="flex-1 text-center md:text-left space-y-2">
+                            <span class="bg-slate-800 text-white text-xs font-bold px-3 py-1 rounded-full uppercase">Sila Ke-4 • Kepala Banteng</span>
+                            <h3 class="title-font text-lg md:text-xl font-bold text-slate-800">"Kerakyatan yang Dipimpin oleh Hikmat Kebijaksanaan dalam Permusyawaratan/Perwakilan"</h3>
+                            <p class="text-xs md:text-sm text-slate-600">Banteng hewan sosial yang berkumpul untuk musyawarah mengambil keputusan.</p>
                         </div>
-                        <button onclick="speakText('Sila Keempat: Kerakyatan yang Dipimpin oleh Hikmat Kebijaksanaan dalam Permusyawaratan/Perwakilan. Simbolnya adalah Kepala Banteng.')" class="bg-brandBlue hover:bg-sky-600 text-white px-4 py-3 rounded-2xl font-bold flex items-center gap-2 shadow-md hover:scale-105 transition">
-                            <i class="fa-solid fa-volume-high text-lg"></i>
+                        <button onclick="speakText('Sila keempat. Kerakyatan yang dipimpin oleh hikmat kebijaksanaan dalam permusyawaratan perwakilan. Simbolnya adalah Kepala Banteng.')" class="bg-slate-800 hover:bg-slate-900 text-white font-bold px-4 py-2 rounded-xl text-sm flex items-center space-x-2 shadow-md btn-bounce">
+                            <i class="fa-solid fa-volume-high"></i>
                             <span>Dengarkan</span>
                         </button>
                     </div>
 
                     <!-- Sila 5 -->
-                    <div class="bg-purple-50/70 rounded-2xl p-5 border-2 border-purple-200 flex flex-col md:flex-row items-center gap-5">
+                    <div class="bg-cyan-50 rounded-2xl p-4 md:p-5 border-2 border-cyan-300 flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6">
                         <img src="https://cdn.shopify.com/s/files/1/0428/0965/5452/files/OptimizedBlog2-1.jpg?v=1674528909" 
                              alt="Sila 5 Padi dan Kapas" 
-                             class="w-24 h-24 object-contain bg-white p-2 rounded-xl border border-purple-200 shadow-sm"
-                             onerror="this.src='https://placehold.co/150x150/CE82FF/FFFFFF?text=Padi+Dan+Kapas'">
-                        <div class="flex-grow text-center md:text-left">
-                            <span class="bg-brandPurple text-white font-bold text-xs px-3 py-1 rounded-full">Sila Ke-5</span>
-                            <h3 class="text-xl font-extrabold text-purple-950 mt-1">Simbol: Padi dan Kapas</h3>
-                            <p class="text-base font-bold text-slate-800 mt-2 bg-white p-3 rounded-xl border border-purple-200 shadow-sm">
-                                "Keadilan Sosial bagi Seluruh Rakyat Indonesia"
-                            </p>
+                             class="w-28 h-28 object-contain bg-white rounded-2xl p-2 shadow-sm border border-cyan-200"
+                             onerror="this.src='https://placehold.co/150x150/67e8f9/164e63?text=Padi+dan+Kapas'">
+                        <div class="flex-1 text-center md:text-left space-y-2">
+                            <span class="bg-cyan-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase">Sila Ke-5 • Padi dan Kapas</span>
+                            <h3 class="title-font text-xl md:text-2xl font-bold text-slate-800">"Keadilan Sosial bagi Seluruh Rakyat Indonesia"</h3>
+                            <p class="text-xs md:text-sm text-slate-600">Padi melambangkan pangan (makanan) dan kapas melambangkan sandang (pakaian).</p>
                         </div>
-                        <button onclick="speakText('Sila Kelima: Keadilan Sosial bagi Seluruh Rakyat Indonesia. Simbolnya adalah Padi dan Kapas.')" class="bg-brandPurple hover:bg-purple-600 text-white px-4 py-3 rounded-2xl font-bold flex items-center gap-2 shadow-md hover:scale-105 transition">
-                            <i class="fa-solid fa-volume-high text-lg"></i>
+                        <button onclick="speakText('Sila kelima. Keadilan sosial bagi seluruh rakyat Indonesia. Simbolnya adalah Padi dan Kapas.')" class="bg-cyan-600 hover:bg-cyan-700 text-white font-bold px-4 py-2 rounded-xl text-sm flex items-center space-x-2 shadow-md btn-bounce">
+                            <i class="fa-solid fa-volume-high"></i>
+                            <span>Dengarkan</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: PENGAMALAN PANCASILA -->
+        <section id="sec-pengamalan" class="hidden space-y-6">
+            <div class="flex items-center justify-between">
+                <button onclick="showSection('beranda')" class="text-slate-600 hover:text-blue-600 font-bold text-sm flex items-center space-x-2">
+                    <i class="fa-solid fa-arrow-left"></i> <span>Kembali ke Beranda</span>
+                </button>
+                <span class="bg-red-100 text-red-800 font-bold text-xs px-3 py-1 rounded-full">Menu 3</span>
+            </div>
+
+            <div class="bg-white rounded-3xl p-6 md:p-8 shadow-xl border-4 border-red-400 space-y-6">
+                
+                <!-- Title & Header Banner Image -->
+                <div class="flex flex-col md:flex-row items-center gap-6 bg-gradient-to-r from-red-50 to-orange-50 p-4 md:p-6 rounded-2xl border-2 border-red-200">
+                    <img src="https://imgx.sonora.id/crop/0x0:0x0/700x465/filters:format(webp):quality(50)/photo/2023/07/11/aktualisasi-prinsip-moderasi-ber-20230711024508.jpg" 
+                         alt="Pengamalan Pancasila" 
+                         class="w-full md:w-64 h-40 object-cover rounded-xl shadow-md border-2 border-white"
+                         onerror="this.src='https://placehold.co/600x400/ef4444/ffffff?text=Pengamalan+Pancasila'">
+                    <div class="space-y-2">
+                        <span class="bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full">Materi Utama</span>
+                        <h2 class="title-font text-2xl md:text-3xl font-extrabold text-slate-800">Pengamalan Sila Pancasila</h2>
+                        <p class="text-slate-600 text-sm">
+                            Pengamalan artinya melakukan perbuatan baik sesuai nilai Pancasila dalam kehidupan sehari-hari. Dengarkan contoh perbuatannya di bawah ini!
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 5 Sila Cards -->
+                <div class="space-y-6">
+                    
+                    <!-- Sila 1 -->
+                    <div class="bg-yellow-50 rounded-3xl p-5 border-2 border-yellow-300 space-y-4">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                            <div class="flex items-center space-x-3">
+                                <span class="w-10 h-10 rounded-full bg-yellow-400 text-yellow-950 font-bold flex items-center justify-center text-lg">1</span>
+                                <h3 class="title-font text-xl font-bold text-slate-800">Sila 1: Ketuhanan Yang Maha Esa</h3>
+                            </div>
+                            <button onclick="speakText('Contoh pengamalan sila pertama: Berdoa sebelum makan dan belajar, Beribadah sesuai agama masing-masing, Menghormati teman yang sedang beribadah.')" class="bg-yellow-400 hover:bg-yellow-500 text-yellow-950 font-bold px-4 py-2 rounded-xl text-xs sm:text-sm flex items-center justify-center space-x-2 shadow-sm">
+                                <i class="fa-solid fa-volume-high"></i>
+                                <span>Putar Suara Pengamalan</span>
+                            </button>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="md:col-span-1">
+                                <img src="https://i.pinimg.com/736x/36/e5/b1/36e5b195d09196ccb59dfbacce9254f3.jpg" 
+                                     alt="Pengamalan Sila 1" 
+                                     class="w-full h-44 object-cover rounded-2xl shadow border border-yellow-200"
+                                     onerror="this.src='https://placehold.co/400x300/fef08a/854d0e?text=Berdoa+dan+Beribadah'">
+                            </div>
+                            <div class="md:col-span-2 bg-white rounded-2xl p-4 border border-yellow-200 space-y-2">
+                                <h4 class="font-bold text-yellow-800 text-sm">3 Contoh Pengamalan:</h4>
+                                <ul class="space-y-2 text-slate-700 text-sm">
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fa-solid fa-star text-yellow-500 mt-1"></i>
+                                        <span>Berdoa sebelum dan sesudah makan serta sebelum belajar.</span>
+                                    </li>
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fa-solid fa-star text-yellow-500 mt-1"></i>
+                                        <span>Rajin beribadah tepat waktu sesuai agama masing-masing.</span>
+                                    </li>
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fa-solid fa-star text-yellow-500 mt-1"></i>
+                                        <span>Menghormati dan tidak mengganggu teman yang sedang beribadah.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sila 2 -->
+                    <div class="bg-red-50 rounded-3xl p-5 border-2 border-red-300 space-y-4">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                            <div class="flex items-center space-x-3">
+                                <span class="w-10 h-10 rounded-full bg-red-500 text-white font-bold flex items-center justify-center text-lg">2</span>
+                                <h3 class="title-font text-xl font-bold text-slate-800">Sila 2: Kemanusiaan yang Adil dan Beradab</h3>
+                            </div>
+                            <button onclick="speakText('Contoh pengamalan sila kedua: Menolong teman yang terjatuh, Berbicara sopan kepada guru dan orang tua, Bersikap ramah dan menyapa teman.')" class="bg-red-500 hover:bg-red-600 text-white font-bold px-4 py-2 rounded-xl text-xs sm:text-sm flex items-center justify-center space-x-2 shadow-sm">
+                                <i class="fa-solid fa-volume-high"></i>
+                                <span>Putar Suara Pengamalan</span>
+                            </button>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="md:col-span-1">
+                                <img src="https://legutykids.com/wp-content/uploads/2022/07/Ilustrasi-Aku-Suka-Membantu-dan-Ramah-3.png" 
+                                     alt="Pengamalan Sila 2" 
+                                     class="w-full h-44 object-cover rounded-2xl shadow border border-red-200"
+                                     onerror="this.src='https://placehold.co/400x300/fecdd3/991b1b?text=Menolong+Teman'">
+                            </div>
+                            <div class="md:col-span-2 bg-white rounded-2xl p-4 border border-red-200 space-y-2">
+                                <h4 class="font-bold text-red-700 text-sm">3 Contoh Pengamalan:</h4>
+                                <ul class="space-y-2 text-slate-700 text-sm">
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fa-solid fa-heart text-red-500 mt-1"></i>
+                                        <span>Menolong teman atau saudara yang terjatuh atau membutuhkan bantuan.</span>
+                                    </li>
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fa-solid fa-heart text-red-500 mt-1"></i>
+                                        <span>Berbicara dengan sopan dan santun kepada guru, orang tua, dan teman.</span>
+                                    </li>
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fa-solid fa-heart text-red-500 mt-1"></i>
+                                        <span>Bersikap ramah, tidak mengejek, dan mau menyapa teman.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sila 3 -->
+                    <div class="bg-emerald-50 rounded-3xl p-5 border-2 border-emerald-300 space-y-4">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                            <div class="flex items-center space-x-3">
+                                <span class="w-10 h-10 rounded-full bg-emerald-500 text-white font-bold flex items-center justify-center text-lg">3</span>
+                                <h3 class="title-font text-xl font-bold text-slate-800">Sila 3: Persatuan Indonesia</h3>
+                            </div>
+                            <button onclick="speakText('Contoh pengamalan sila ketiga: Mengikuti upacara bendera dengan tertib, Berteman dengan siapa saja tanpa membeda-bedakan, Rukun saat bermain bersama teman.')" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-4 py-2 rounded-xl text-xs sm:text-sm flex items-center justify-center space-x-2 shadow-sm">
+                                <i class="fa-solid fa-volume-high"></i>
+                                <span>Putar Suara Pengamalan</span>
+                            </button>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="md:col-span-1">
+                                <img src="https://media.suara.com/pictures/653x366/2017/09/18/64062-ilustrasi-upacara-bendera-di-sekolah.jpg" 
+                                     alt="Pengamalan Sila 3" 
+                                     class="w-full h-44 object-cover rounded-2xl shadow border border-emerald-200"
+                                     onerror="this.src='https://placehold.co/400x300/a7f3d0/065f46?text=Upacara+Bendera'">
+                            </div>
+                            <div class="md:col-span-2 bg-white rounded-2xl p-4 border border-emerald-200 space-y-2">
+                                <h4 class="font-bold text-emerald-800 text-sm">3 Contoh Pengamalan:</h4>
+                                <ul class="space-y-2 text-slate-700 text-sm">
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fa-solid fa-tree text-emerald-600 mt-1"></i>
+                                        <span>Mengikuti upacara bendera di sekolah dengan hikmat dan tertib.</span>
+                                    </li>
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fa-solid fa-tree text-emerald-600 mt-1"></i>
+                                        <span>Berteman dengan siapa saja tanpa membeda-bedakan suku dan agama.</span>
+                                    </li>
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fa-solid fa-tree text-emerald-600 mt-1"></i>
+                                        <span>Selalu rukun dan menjaga kekompakan saat bermain bersama teman.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sila 4 -->
+                    <div class="bg-purple-50 rounded-3xl p-5 border-2 border-purple-300 space-y-4">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                            <div class="flex items-center space-x-3">
+                                <span class="w-10 h-10 rounded-full bg-purple-600 text-white font-bold flex items-center justify-center text-lg">4</span>
+                                <h3 class="title-font text-xl font-bold text-slate-800">Sila 4: Kerakyatan yang Dipimpin oleh Hikmat Kebijaksanaan...</h3>
+                            </div>
+                            <button onclick="speakText('Contoh pengamalan sila keempat: Bermusyawarah memilih ketua kelas, Menerima keputusan bersama dengan lapang dada, Mendengarkan pendapat teman saat belajar kelompok.')" class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-4 py-2 rounded-xl text-xs sm:text-sm flex items-center justify-center space-x-2 shadow-sm">
+                                <i class="fa-solid fa-volume-high"></i>
+                                <span>Putar Suara Pengamalan</span>
+                            </button>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="md:col-span-1">
+                                <img src="https://img.magnific.com/vektor-premium/ilustrasi-vektor-anak-anak-pendidikan-siswa-melakukan-kerja-kelompok-siswa-belajar-dengan-guru_723224-4248.jpg" 
+                                     alt="Pengamalan Sila 4" 
+                                     class="w-full h-44 object-cover rounded-2xl shadow border border-purple-200"
+                                     onerror="this.src='https://placehold.co/400x300/e9d5ff/6b21a8?text=Musyawarah+dan+Diskusi'">
+                            </div>
+                            <div class="md:col-span-2 bg-white rounded-2xl p-4 border border-purple-200 space-y-2">
+                                <h4 class="font-bold text-purple-800 text-sm">3 Contoh Pengamalan:</h4>
+                                <ul class="space-y-2 text-slate-700 text-sm">
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fa-solid fa-comments text-purple-600 mt-1"></i>
+                                        <span>Ikut serta bermusyawarah saat pemilihan ketua kelas atau pembagian tugas.</span>
+                                    </li>
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fa-solid fa-comments text-purple-600 mt-1"></i>
+                                        <span>Mau mendengarkan dan menghargai pendapat teman saat belajar kelompok.</span>
+                                    </li>
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fa-solid fa-comments text-purple-600 mt-1"></i>
+                                        <span>Menerima keputusan bersama dengan senyuman dan lapang dada.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sila 5 -->
+                    <div class="bg-cyan-50 rounded-3xl p-5 border-2 border-cyan-300 space-y-4">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                            <div class="flex items-center space-x-3">
+                                <span class="w-10 h-10 rounded-full bg-cyan-600 text-white font-bold flex items-center justify-center text-lg">5</span>
+                                <h3 class="title-font text-xl font-bold text-slate-800">Sila 5: Keadilan Sosial bagi Seluruh Rakyat Indonesia</h3>
+                            </div>
+                            <button onclick="speakText('Contoh pengamalan sila kelima: Suka berbagi makanan dengan teman, Bersikap adil saat bermain, Menjaga kebersihan dan fasilitas bersama.')" class="bg-cyan-600 hover:bg-cyan-700 text-white font-bold px-4 py-2 rounded-xl text-xs sm:text-sm flex items-center justify-center space-x-2 shadow-sm">
+                                <i class="fa-solid fa-volume-high"></i>
+                                <span>Putar Suara Pengamalan</span>
+                            </button>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="md:col-span-1">
+                                <img src="https://img.magnific.com/vektor-premium/ilustrasi-anak-anak-berbagi-makanan-ringan_149195-254.jpg" 
+                                     alt="Pengamalan Sila 5" 
+                                     class="w-full h-44 object-cover rounded-2xl shadow border border-cyan-200"
+                                     onerror="this.src='https://placehold.co/400x300/cffafe/155e75?text=Berbagi+dan+Adil'">
+                            </div>
+                            <div class="md:col-span-2 bg-white rounded-2xl p-4 border border-cyan-200 space-y-2">
+                                <h4 class="font-bold text-cyan-800 text-sm">3 Contoh Pengamalan:</h4>
+                                <ul class="space-y-2 text-slate-700 text-sm">
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fa-solid fa-wheat-awn text-cyan-700 mt-1"></i>
+                                        <span>Suka berbagi makanan atau alat tulis dengan teman yang membutuhkan.</span>
+                                    </li>
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fa-solid fa-wheat-awn text-cyan-700 mt-1"></i>
+                                        <span>Bersikap adil kepada semua teman dan tidak pilih kasih saat bermain.</span>
+                                    </li>
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fa-solid fa-wheat-awn text-cyan-700 mt-1"></i>
+                                        <span>Menjaga kebersihan kelas serta merawat peralatan bersama.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: NILAI - NILAI TARAKANITA -->
+        <section id="sec-tarakanita" class="hidden space-y-6">
+            <div class="flex items-center justify-between">
+                <button onclick="showSection('beranda')" class="text-slate-600 hover:text-blue-600 font-bold text-sm flex items-center space-x-2">
+                    <i class="fa-solid fa-arrow-left"></i> <span>Kembali ke Beranda</span>
+                </button>
+                <span class="bg-purple-100 text-purple-800 font-bold text-xs px-3 py-1 rounded-full">Menu 4</span>
+            </div>
+
+            <div class="bg-white rounded-3xl p-6 md:p-8 shadow-xl border-4 border-purple-400 space-y-6">
+                <div class="border-b-2 border-slate-100 pb-4">
+                    <h2 class="title-font text-3xl font-extrabold text-purple-700 flex items-center space-x-3">
+                        <i class="fa-solid fa-award"></i>
+                        <span>Nilai-Nilai Tarakanita</span>
+                    </h2>
+                    <p class="text-slate-600 text-sm mt-1">Keterkaitan Materi Penerapan Pancasila dengan 3 Nilai Utama Tarakanita</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    
+                    <!-- Compassion -->
+                    <div class="bg-gradient-to-b from-pink-50 to-red-50 rounded-3xl p-5 border-2 border-pink-300 space-y-4 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="w-14 h-14 rounded-2xl bg-pink-500 text-white flex items-center justify-center text-2xl font-bold shadow-md mb-3">
+                                <i class="fa-solid fa-heart"></i>
+                            </div>
+                            <h3 class="title-font text-2xl font-bold text-pink-700">Compassion</h3>
+                            <p class="text-xs font-semibold text-pink-600 uppercase tracking-wide">Bela Rasa & Kasih Sayang</p>
+                            <hr class="my-3 border-pink-200">
+                            <ul class="space-y-2 text-slate-700 text-sm">
+                                <li class="flex items-start space-x-2">
+                                    <span class="text-pink-500 font-bold">•</span>
+                                    <span>Menolong teman yang sedang bersedih atau mengalami kesulitan.</span>
+                                </li>
+                                <li class="flex items-start space-x-2">
+                                    <span class="text-pink-500 font-bold">•</span>
+                                    <span>Mau berbagi makanan dan peralatan sekolah secara ikhlas.</span>
+                                </li>
+                                <li class="flex items-start space-x-2">
+                                    <span class="text-pink-500 font-bold">•</span>
+                                    <span>Mengasihi dan merawat lingkungan serta mendoakan sesama.</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <button onclick="speakText('Nilai Compassion atau Bela Rasa. Contohnya: Menolong teman yang kesulitan, Mau berbagi makanan, Mengasihi dan merawat sesama.')" class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 rounded-xl text-xs w-full flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-volume-high"></i>
+                            <span>Dengarkan</span>
+                        </button>
+                    </div>
+
+                    <!-- Competence -->
+                    <div class="bg-gradient-to-b from-blue-50 to-indigo-50 rounded-3xl p-5 border-2 border-blue-300 space-y-4 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="w-14 h-14 rounded-2xl bg-blue-600 text-white flex items-center justify-center text-2xl font-bold shadow-md mb-3">
+                                <i class="fa-solid fa-brain"></i>
+                            </div>
+                            <h3 class="title-font text-2xl font-bold text-blue-800">Competence</h3>
+                            <p class="text-xs font-semibold text-blue-600 uppercase tracking-wide">Cerdas & Belajar Sungguh-sungguh</p>
+                            <hr class="my-3 border-blue-200">
+                            <ul class="space-y-2 text-slate-700 text-sm">
+                                <li class="flex items-start space-x-2">
+                                    <span class="text-blue-600 font-bold">•</span>
+                                    <span>Menghafalkan bunyi dan simbol Pancasila dengan penuh semangat.</span>
+                                </li>
+                                <li class="flex items-start space-x-2">
+                                    <span class="text-blue-600 font-bold">•</span>
+                                    <span>Mengerjakan tugas dan latihan soal Linuris dengan jujur dan mandiri.</span>
+                                </li>
+                                <li class="flex items-start space-x-2">
+                                    <span class="text-blue-600 font-bold">•</span>
+                                    <span>Aktif bertanya dan berani menjawab saat pembelajaran di kelas.</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <button onclick="speakText('Nilai Competence atau Cerdas. Contohnya: Menghafalkan bunyi Pancasila, Mengerjakan tugas dengan jujur, Aktif bertanya di kelas.')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-xl text-xs w-full flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-volume-high"></i>
+                            <span>Dengarkan</span>
+                        </button>
+                    </div>
+
+                    <!-- Community -->
+                    <div class="bg-gradient-to-b from-purple-50 to-pink-50 rounded-3xl p-5 border-2 border-purple-300 space-y-4 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="w-14 h-14 rounded-2xl bg-purple-600 text-white flex items-center justify-center text-2xl font-bold shadow-md mb-3">
+                                <i class="fa-solid fa-people-group"></i>
+                            </div>
+                            <h3 class="title-font text-2xl font-bold text-purple-800">Community</h3>
+                            <p class="text-xs font-semibold text-purple-600 uppercase tracking-wide">Persaudaraan & Kerjasama</p>
+                            <hr class="my-3 border-purple-200">
+                            <ul class="space-y-2 text-slate-700 text-sm">
+                                <li class="flex items-start space-x-2">
+                                    <span class="text-purple-600 font-bold">•</span>
+                                    <span>Bekerja sama membersihkan ruang kelas bersama teman-teman.</span>
+                                </li>
+                                <li class="flex items-start space-x-2">
+                                    <span class="text-purple-600 font-bold">•</span>
+                                    <span>Menjaga kerukunan dan tidak bertengkar saat berada di sekolah.</span>
+                                </li>
+                                <li class="flex items-start space-x-2">
+                                    <span class="text-purple-600 font-bold">•</span>
+                                    <span>Menghormati perbedaan pendapat dan keputusan musyawarah bersama.</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <button onclick="speakText('Nilai Community atau Kerjasama. Contohnya: Bekerja sama piket kelas, Menjaga kerukunan, Menghormati keputusan musyawarah.')" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 rounded-xl text-xs w-full flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-volume-high"></i>
                             <span>Dengarkan</span>
                         </button>
                     </div>
@@ -412,705 +790,433 @@
             </div>
         </section>
 
-        <!-- VIEW: BUTTON 3 - PENGAMALAN PANCASILA -->
-        <section id="page-pengamalan" class="hidden space-y-6">
-            <div class="flex items-center justify-between bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
-                <button onclick="switchPage('home')" class="text-slate-600 hover:text-brandBlue font-bold flex items-center space-x-2">
-                    <i class="fa-solid fa-arrow-left"></i>
-                    <span>Kembali ke Beranda</span>
+        <!-- SECTION 5: VIDEO PEMBELAJARAN -->
+        <section id="sec-video" class="hidden space-y-6">
+            <div class="flex items-center justify-between">
+                <button onclick="showSection('beranda')" class="text-slate-600 hover:text-blue-600 font-bold text-sm flex items-center space-x-2">
+                    <i class="fa-solid fa-arrow-left"></i> <span>Kembali ke Beranda</span>
                 </button>
-                <span class="font-bold text-brandGreen bg-green-50 px-3 py-1 rounded-full text-xs border border-green-200">Pengamalan Pancasila</span>
+                <span class="bg-emerald-100 text-emerald-800 font-bold text-xs px-3 py-1 rounded-full">Menu 5</span>
             </div>
 
-            <div class="bg-white rounded-3xl p-6 md:p-8 shadow-md border border-slate-200 space-y-6">
-                
-                <!-- Section Header with Required Image -->
-                <div class="flex flex-col md:flex-row items-center gap-6 bg-green-50 p-5 rounded-3xl border border-green-200">
-                    <img src="https://imgx.sonora.id/crop/0x0:0x0/700x465/filters:format(webp):quality(50)/photo/2023/07/11/aktualisasi-prinsip-moderasi-ber-20230711024508.jpg" 
-                         alt="Pengamalan Pancasila" 
-                         class="w-full md:w-56 h-36 object-cover rounded-2xl shadow border border-green-200"
-                         onerror="this.src='https://placehold.co/400x250/58CC02/FFFFFF?text=Pengamalan+Pancasila'">
-                    <div>
-                        <h2 class="text-2xl md:text-3xl font-extrabold text-slate-800">
-                            Pengamalan Sila Pancasila
-                        </h2>
-                        <p class="text-slate-600 text-sm mt-2">
-                            Berikut adalah contoh perbuatan baik sesuai dengan sila-sila Pancasila. Tekan tombol <b class="text-brandGreen">"Dengarkan Suara"</b> untuk mendengarkan bacaan!
-                        </p>
-                    </div>
-                </div>
-
-                <!-- 5 Sila Practice Cards -->
-                <div class="space-y-6">
-
-                    <!-- Sila 1 Practice -->
-                    <div class="bg-amber-50 rounded-3xl p-6 border-2 border-amber-200 space-y-4">
-                        <div class="flex flex-col sm:flex-row items-center gap-4">
-                            <img src="https://i.pinimg.com/736x/36/e5/b1/36e5b195d09196ccb59dfbacce9254f3.jpg" 
-                                 alt="Pengamalan Sila 1" 
-                                 class="w-full sm:w-36 h-32 object-cover rounded-2xl border border-amber-300 shadow-sm"
-                                 onerror="this.src='https://placehold.co/300x200/FFC800/FFFFFF?text=Berdoa+Sebelum+Makan'">
-                            <div class="flex-grow">
-                                <span class="bg-amber-500 text-white font-bold text-xs px-3 py-1 rounded-full">Sila 1 • Bintang</span>
-                                <h3 class="text-xl font-extrabold text-amber-950 mt-1">Ketuhanan Yang Maha Esa</h3>
-                                <p class="text-xs text-amber-800 font-semibold mt-1">Contoh Pengamalan Sila Pertama di Sekolah & Rumah:</p>
-                            </div>
-                        </div>
-
-                        <div class="bg-white p-4 rounded-2xl border border-amber-200 space-y-2">
-                            <div class="flex items-start justify-between gap-2">
-                                <p class="text-sm font-bold text-slate-700">1. Berdoa sebelum dan sesudah belajar.</p>
-                                <button onclick="speakText('Contoh pertama: Berdoa sebelum dan sesudah belajar.')" class="text-amber-600 hover:text-amber-800 text-sm font-bold p-1"><i class="fa-solid fa-volume-high"></i></button>
-                            </div>
-                            <div class="flex items-start justify-between gap-2 border-t pt-2">
-                                <p class="text-sm font-bold text-slate-700">2. Taat beribadah sesuai dengan agama masing-masing.</p>
-                                <button onclick="speakText('Contoh kedua: Taat beribadah sesuai dengan agama masing-masing.')" class="text-amber-600 hover:text-amber-800 text-sm font-bold p-1"><i class="fa-solid fa-volume-high"></i></button>
-                            </div>
-                            <div class="flex items-start justify-between gap-2 border-t pt-2">
-                                <p class="text-sm font-bold text-slate-700">3. Menghormati teman yang sedang beribadah.</p>
-                                <button onclick="speakText('Contoh ketiga: Menghormati teman yang sedang beribadah.')" class="text-amber-600 hover:text-amber-800 text-sm font-bold p-1"><i class="fa-solid fa-volume-high"></i></button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Sila 2 Practice -->
-                    <div class="bg-rose-50 rounded-3xl p-6 border-2 border-rose-200 space-y-4">
-                        <div class="flex flex-col sm:flex-row items-center gap-4">
-                            <img src="https://legutykids.com/wp-content/uploads/2022/07/Ilustrasi-Aku-Suka-Membantu-dan-Ramah-3.png" 
-                                 alt="Pengamalan Sila 2" 
-                                 class="w-full sm:w-36 h-32 object-cover rounded-2xl border border-rose-300 shadow-sm"
-                                 onerror="this.src='https://placehold.co/300x200/FF4B4B/FFFFFF?text=Membantu+Teman'">
-                            <div class="flex-grow">
-                                <span class="bg-brandRed text-white font-bold text-xs px-3 py-1 rounded-full">Sila 2 • Rantai Emas</span>
-                                <h3 class="text-xl font-extrabold text-rose-950 mt-1">Kemanusiaan yang Adil dan Beradab</h3>
-                                <p class="text-xs text-rose-800 font-semibold mt-1">Contoh Pengamalan Sila Kedua:</p>
-                            </div>
-                        </div>
-
-                        <div class="bg-white p-4 rounded-2xl border border-rose-200 space-y-2">
-                            <div class="flex items-start justify-between gap-2">
-                                <p class="text-sm font-bold text-slate-700">1. Membantu teman yang jatuh atau kesusahan.</p>
-                                <button onclick="speakText('Contoh pertama: Membantu teman yang jatuh atau kesusahan.')" class="text-rose-600 hover:text-rose-800 text-sm font-bold p-1"><i class="fa-solid fa-volume-high"></i></button>
-                            </div>
-                            <div class="flex items-start justify-between gap-2 border-t pt-2">
-                                <p class="text-sm font-bold text-slate-700">2. Bersikap sopan dan ramah kepada guru dan teman.</p>
-                                <button onclick="speakText('Contoh kedua: Bersikap sopan dan ramah kepada guru dan teman.')" class="text-rose-600 hover:text-rose-800 text-sm font-bold p-1"><i class="fa-solid fa-volume-high"></i></button>
-                            </div>
-                            <div class="flex items-start justify-between gap-2 border-t pt-2">
-                                <p class="text-sm font-bold text-slate-700">3. Menjenguk teman kelas yang sedang sakit.</p>
-                                <button onclick="speakText('Contoh ketiga: Menjenguk teman kelas yang sedang sakit.')" class="text-rose-600 hover:text-rose-800 text-sm font-bold p-1"><i class="fa-solid fa-volume-high"></i></button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Sila 3 Practice -->
-                    <div class="bg-emerald-50 rounded-3xl p-6 border-2 border-emerald-200 space-y-4">
-                        <div class="flex flex-col sm:flex-row items-center gap-4">
-                            <img src="https://media.suara.com/pictures/653x366/2017/09/18/64062-ilustrasi-upacara-bendera-di-sekolah.jpg" 
-                                 alt="Pengamalan Sila 3" 
-                                 class="w-full sm:w-36 h-32 object-cover rounded-2xl border border-emerald-300 shadow-sm"
-                                 onerror="this.src='https://placehold.co/300x200/58CC02/FFFFFF?text=Upacara+Bendera'">
-                            <div class="flex-grow">
-                                <span class="bg-brandGreen text-white font-bold text-xs px-3 py-1 rounded-full">Sila 3 • Pohon Beringin</span>
-                                <h3 class="text-xl font-extrabold text-emerald-950 mt-1">Persatuan Indonesia</h3>
-                                <p class="text-xs text-emerald-800 font-semibold mt-1">Contoh Pengamalan Sila Ketiga:</p>
-                            </div>
-                        </div>
-
-                        <div class="bg-white p-4 rounded-2xl border border-emerald-200 space-y-2">
-                            <div class="flex items-start justify-between gap-2">
-                                <p class="text-sm font-bold text-slate-700">1. Mengikuti upacara bendera dengan tertib.</p>
-                                <button onclick="speakText('Contoh pertama: Mengikuti upacara bendera dengan tertib.')" class="text-emerald-600 hover:text-emerald-800 text-sm font-bold p-1"><i class="fa-solid fa-volume-high"></i></button>
-                            </div>
-                            <div class="flex items-start justify-between gap-2 border-t pt-2">
-                                <p class="text-sm font-bold text-slate-700">2. Bermain rukun tanpa membeda-bedakan teman.</p>
-                                <button onclick="speakText('Contoh kedua: Bermain rukun tanpa membeda-bedakan teman.')" class="text-emerald-600 hover:text-emerald-800 text-sm font-bold p-1"><i class="fa-solid fa-volume-high"></i></button>
-                            </div>
-                            <div class="flex items-start justify-between gap-2 border-t pt-2">
-                                <p class="text-sm font-bold text-slate-700">3. Mencintai dan menggunakan produk buatan Indonesia.</p>
-                                <button onclick="speakText('Contoh ketiga: Mencintai dan menggunakan produk buatan Indonesia.')" class="text-emerald-600 hover:text-emerald-800 text-sm font-bold p-1"><i class="fa-solid fa-volume-high"></i></button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Sila 4 Practice -->
-                    <div class="bg-sky-50 rounded-3xl p-6 border-2 border-sky-200 space-y-4">
-                        <div class="flex flex-col sm:flex-row items-center gap-4">
-                            <img src="https://img.magnific.com/vektor-premium/ilustrasi-vektor-anak-anak-pendidikan-siswa-melakukan-kerja-kelompok-siswa-belajar-dengan-guru_723224-4248.jpg" 
-                                 alt="Pengamalan Sila 4" 
-                                 class="w-full sm:w-36 h-32 object-cover rounded-2xl border border-sky-300 shadow-sm"
-                                 onerror="this.src='https://placehold.co/300x200/1CB0F6/FFFFFF?text=Kerja+Kelompok'">
-                            <div class="flex-grow">
-                                <span class="bg-brandBlue text-white font-bold text-xs px-3 py-1 rounded-full">Sila 4 • Kepala Banteng</span>
-                                <h3 class="text-xl font-extrabold text-sky-950 mt-1">Kerakyatan yang Dipimpin oleh Hikmat Kebijaksanaan...</h3>
-                                <p class="text-xs text-sky-800 font-semibold mt-1">Contoh Pengamalan Sila Keempat:</p>
-                            </div>
-                        </div>
-
-                        <div class="bg-white p-4 rounded-2xl border border-sky-200 space-y-2">
-                            <div class="flex items-start justify-between gap-2">
-                                <p class="text-sm font-bold text-slate-700">1. Bermusyawarah memilih ketua kelas secara bersama.</p>
-                                <button onclick="speakText('Contoh pertama: Bermusyawarah memilih ketua kelas secara bersama.')" class="text-sky-600 hover:text-sky-800 text-sm font-bold p-1"><i class="fa-solid fa-volume-high"></i></button>
-                            </div>
-                            <div class="flex items-start justify-between gap-2 border-t pt-2">
-                                <p class="text-sm font-bold text-slate-700">2. Mendengarkan pendapat teman saat belajar kelompok.</p>
-                                <button onclick="speakText('Contoh kedua: Mendengarkan pendapat teman saat belajar kelompok.')" class="text-sky-600 hover:text-sky-800 text-sm font-bold p-1"><i class="fa-solid fa-volume-high"></i></button>
-                            </div>
-                            <div class="flex items-start justify-between gap-2 border-t pt-2">
-                                <p class="text-sm font-bold text-slate-700">3. Berani mengacungkan tangan untuk bertanya di kelas.</p>
-                                <button onclick="speakText('Contoh ketiga: Berani mengacungkan tangan untuk bertanya di kelas.')" class="text-sky-600 hover:text-sky-800 text-sm font-bold p-1"><i class="fa-solid fa-volume-high"></i></button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Sila 5 Practice -->
-                    <div class="bg-purple-50 rounded-3xl p-6 border-2 border-purple-200 space-y-4">
-                        <div class="flex flex-col sm:flex-row items-center gap-4">
-                            <img src="https://img.magnific.com/vektor-premium/ilustrasi-anak-anak-berbagi-makanan-ringan_149195-254.jpg" 
-                                 alt="Pengamalan Sila 5" 
-                                 class="w-full sm:w-36 h-32 object-cover rounded-2xl border border-purple-300 shadow-sm"
-                                 onerror="this.src='https://placehold.co/300x200/CE82FF/FFFFFF?text=Berbagi+Makanan'">
-                            <div class="flex-grow">
-                                <span class="bg-brandPurple text-white font-bold text-xs px-3 py-1 rounded-full">Sila 5 • Padi & Kapas</span>
-                                <h3 class="text-xl font-extrabold text-purple-950 mt-1">Keadilan Sosial bagi Seluruh Rakyat Indonesia</h3>
-                                <p class="text-xs text-purple-800 font-semibold mt-1">Contoh Pengamalan Sila Kelima:</p>
-                            </div>
-                        </div>
-
-                        <div class="bg-white p-4 rounded-2xl border border-purple-200 space-y-2">
-                            <div class="flex items-start justify-between gap-2">
-                                <p class="text-sm font-bold text-slate-700">1. Bersikap adil dan mau berbagi makanan dengan teman.</p>
-                                <button onclick="speakText('Contoh pertama: Bersikap adil dan mau berbagi makanan dengan teman.')" class="text-purple-600 hover:text-purple-800 text-sm font-bold p-1"><i class="fa-solid fa-volume-high"></i></button>
-                            </div>
-                            <div class="flex items-start justify-between gap-2 border-t pt-2">
-                                <p class="text-sm font-bold text-slate-700">2. Suka menabung dan tidak boros jajan.</p>
-                                <button onclick="speakText('Contoh kedua: Suka menabung dan tidak boros jajan.')" class="text-purple-600 hover:text-purple-800 text-sm font-bold p-1"><i class="fa-solid fa-volume-high"></i></button>
-                            </div>
-                            <div class="flex items-start justify-between gap-2 border-t pt-2">
-                                <p class="text-sm font-bold text-slate-700">3. Menjaga kebersihan fasilitas umum di sekolah.</p>
-                                <button onclick="speakText('Contoh ketiga: Menjaga kebersihan fasilitas umum di sekolah.')" class="text-purple-600 hover:text-purple-800 text-sm font-bold p-1"><i class="fa-solid fa-volume-high"></i></button>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
-        <!-- VIEW: BUTTON 4 - NILAI TARAKANITA -->
-        <section id="page-tarakanita" class="hidden space-y-6">
-            <div class="flex items-center justify-between bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
-                <button onclick="switchPage('home')" class="text-slate-600 hover:text-brandBlue font-bold flex items-center space-x-2">
-                    <i class="fa-solid fa-arrow-left"></i>
-                    <span>Kembali ke Beranda</span>
-                </button>
-                <span class="font-bold text-brandPurple bg-purple-50 px-3 py-1 rounded-full text-xs border border-purple-200">Nilai Tarakanita</span>
-            </div>
-
-            <div class="bg-white rounded-3xl p-6 md:p-8 shadow-md border border-slate-200 space-y-6">
+            <div class="bg-white rounded-3xl p-6 md:p-8 shadow-xl border-4 border-emerald-400 space-y-6">
                 <div>
-                    <h2 class="text-2xl md:text-3xl font-extrabold text-slate-800 flex items-center gap-3">
-                        <i class="fa-solid fa-award text-brandPurple"></i>
-                        Nilai-Nilai Ketarakanitaan & Pancasila
+                    <h2 class="title-font text-3xl font-extrabold text-emerald-700 flex items-center space-x-3">
+                        <i class="fa-solid fa-circle-play"></i>
+                        <span>Video Pembelajaran Interaktif</span>
                     </h2>
-                    <p class="text-slate-500 text-sm mt-1">Penerapan Pancasila dalam nilai Compassion, Competence, dan Community.</p>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-
-                    <!-- Compassion -->
-                    <div class="bg-gradient-to-b from-rose-50 to-white rounded-3xl p-6 border-2 border-rose-200 flex flex-col justify-between shadow-sm">
-                        <div>
-                            <div class="w-12 h-12 bg-rose-500 text-white rounded-2xl flex items-center justify-center text-xl font-bold mb-3 shadow">
-                                <i class="fa-solid fa-heart"></i>
-                            </div>
-                            <h3 class="text-xl font-extrabold text-rose-950">Compassion</h3>
-                            <p class="text-xs text-rose-700 font-semibold mb-4">Kasih Sayang & Bela Rasa</p>
-                            
-                            <ul class="space-y-2 text-xs text-slate-700 font-medium">
-                                <li class="bg-white p-2.5 rounded-xl border border-rose-100 shadow-xs flex items-start gap-2">
-                                    <i class="fa-solid fa-circle-check text-rose-500 mt-0.5"></i>
-                                    <span>Menolong teman yang membutuhkan bantuan tanpa pamrih.</span>
-                                </li>
-                                <li class="bg-white p-2.5 rounded-xl border border-rose-100 shadow-xs flex items-start gap-2">
-                                    <i class="fa-solid fa-circle-check text-rose-500 mt-0.5"></i>
-                                    <span>Menunjukkan simpati kepada teman yang sedang sedih.</span>
-                                </li>
-                                <li class="bg-white p-2.5 rounded-xl border border-rose-100 shadow-xs flex items-start gap-2">
-                                    <i class="fa-solid fa-circle-check text-rose-500 mt-0.5"></i>
-                                    <span>Berbagi bekal makanan dengan sopan kepada teman.</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- Competence -->
-                    <div class="bg-gradient-to-b from-blue-50 to-white rounded-3xl p-6 border-2 border-blue-200 flex flex-col justify-between shadow-sm">
-                        <div>
-                            <div class="w-12 h-12 bg-brandBlue text-white rounded-2xl flex items-center justify-center text-xl font-bold mb-3 shadow">
-                                <i class="fa-solid fa-brain"></i>
-                            </div>
-                            <h3 class="text-xl font-extrabold text-blue-950">Competence</h3>
-                            <p class="text-xs text-blue-700 font-semibold mb-4">Kecerdasan & Kemampuan</p>
-                            
-                            <ul class="space-y-2 text-xs text-slate-700 font-medium">
-                                <li class="bg-white p-2.5 rounded-xl border border-blue-100 shadow-xs flex items-start gap-2">
-                                    <i class="fa-solid fa-circle-check text-brandBlue mt-0.5"></i>
-                                    <span>Rajin belajar dan mendengarkan penjelasan guru di kelas.</span>
-                                </li>
-                                <li class="bg-white p-2.5 rounded-xl border border-blue-100 shadow-xs flex items-start gap-2">
-                                    <i class="fa-solid fa-circle-check text-brandBlue mt-0.5"></i>
-                                    <span>Berani menjawab pertanyaan dan berpendapat secara jujur.</span>
-                                </li>
-                                <li class="bg-white p-2.5 rounded-xl border border-blue-100 shadow-xs flex items-start gap-2">
-                                    <i class="fa-solid fa-circle-check text-brandBlue mt-0.5"></i>
-                                    <span>Mengerjakan tugas sekolah tepat waktu dengan bersungguh-sungguh.</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- Community -->
-                    <div class="bg-gradient-to-b from-green-50 to-white rounded-3xl p-6 border-2 border-green-200 flex flex-col justify-between shadow-sm">
-                        <div>
-                            <div class="w-12 h-12 bg-brandGreen text-white rounded-2xl flex items-center justify-center text-xl font-bold mb-3 shadow">
-                                <i class="fa-solid fa-people-group"></i>
-                            </div>
-                            <h3 class="text-xl font-extrabold text-green-950">Community</h3>
-                            <p class="text-xs text-green-700 font-semibold mb-4">Persaudaraan & Kebersamaan</p>
-                            
-                            <ul class="space-y-2 text-xs text-slate-700 font-medium">
-                                <li class="bg-white p-2.5 rounded-xl border border-green-100 shadow-xs flex items-start gap-2">
-                                    <i class="fa-solid fa-circle-check text-brandGreen mt-0.5"></i>
-                                    <span>Kerja bakti membersihkan kelas secara gotong royong.</span>
-                                </li>
-                                <li class="bg-white p-2.5 rounded-xl border border-green-100 shadow-xs flex items-start gap-2">
-                                    <i class="fa-solid fa-circle-check text-brandGreen mt-0.5"></i>
-                                    <span>Menjaga keharmonisan dan tidak bertengkar dengan teman.</span>
-                                </li>
-                                <li class="bg-white p-2.5 rounded-xl border border-green-100 shadow-xs flex items-start gap-2">
-                                    <i class="fa-solid fa-circle-check text-brandGreen mt-0.5"></i>
-                                    <span>Menghargai perbedaan agama dan suku antarteman.</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
-        <!-- VIEW: BUTTON 5 - VIDEO PEMBELAJARAN -->
-        <section id="page-video" class="hidden space-y-6">
-            <div class="flex items-center justify-between bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
-                <button onclick="switchPage('home')" class="text-slate-600 hover:text-brandBlue font-bold flex items-center space-x-2">
-                    <i class="fa-solid fa-arrow-left"></i>
-                    <span>Kembali ke Beranda</span>
-                </button>
-                <span class="font-bold text-rose-600 bg-rose-50 px-3 py-1 rounded-full text-xs border border-rose-200">Video Pembelajaran</span>
-            </div>
-
-            <div class="bg-white rounded-3xl p-6 md:p-8 shadow-md border border-slate-200 space-y-6">
-                <div>
-                    <h2 class="text-2xl md:text-3xl font-extrabold text-slate-800 flex items-center gap-3">
-                        <i class="fa-solid fa-video text-rose-500"></i>
-                        Penerapan Nilai - Nilai Pancasila Dalam Kehidupan Sehari-hari
-                    </h2>
-                    <p class="text-slate-500 text-sm mt-1">Saksikan video menarik berikut ini yuk!</p>
+                    <p class="text-slate-600 text-sm mt-1">Judul Video: Penerapan Nilai - Nilai Pancasila Dalam Kehidupan Sehari-hari</p>
                 </div>
 
                 <!-- Video Frame Embed -->
-                <div class="relative w-full rounded-3xl overflow-hidden shadow-2xl border-4 border-slate-800 bg-black aspect-video">
-                    <iframe class="w-full h-full" 
+                <div class="relative w-full rounded-2xl overflow-hidden shadow-2xl bg-black border-4 border-emerald-300" style="padding-top: 56.25%;">
+                    <iframe class="absolute top-0 left-0 w-full h-full" 
                             src="https://www.youtube.com/embed/wMptaMYUp-M" 
                             title="Penerapan Nilai - Nilai Pancasila Dalam Kehidupan Sehari-hari" 
                             frameborder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                            allowfullscreen></iframe>
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                    </iframe>
                 </div>
 
-                <div class="bg-rose-50 p-4 rounded-2xl border border-rose-200 flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <div class="flex items-center gap-3">
-                        <i class="fa-brands fa-youtube text-3xl text-red-600"></i>
+                <div class="flex flex-col sm:flex-row items-center justify-between bg-emerald-50 p-4 rounded-2xl border border-emerald-200 gap-4">
+                    <div class="flex items-center space-x-3">
+                        <i class="fa-brands fa-youtube text-red-600 text-3xl"></i>
                         <div>
-                            <p class="text-sm font-bold text-slate-800">Tidak bisa memutar video?</p>
-                            <p class="text-xs text-slate-500">Klik tombol di samping untuk membuka langsung di YouTube.</p>
+                            <h4 class="font-bold text-slate-800 text-sm">Tonton Langsung di YouTube</h4>
+                            <p class="text-xs text-slate-500">Klik tombol di samping untuk membuka tab baru</p>
                         </div>
                     </div>
-                    <a href="https://www.youtube.com/watch?v=wMptaMYUp-M" target="_blank" rel="noopener noreferrer" class="bg-red-600 hover:bg-red-700 text-white font-bold px-5 py-2.5 rounded-xl text-xs flex items-center gap-2 shadow-md shrink-0">
-                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                        <span>Buka di YouTube</span>
+                    <a href="https://www.youtube.com/watch?v=wMptaMYUp-M" target="_blank" rel="noopener noreferrer" class="bg-red-600 hover:bg-red-700 text-white font-bold px-5 py-2.5 rounded-xl text-sm flex items-center space-x-2 shadow-md btn-bounce">
+                        <i class="fa-solid fa-up-right-from-square"></i>
+                        <span>Buka Link YouTube</span>
                     </a>
                 </div>
             </div>
         </section>
 
-        <!-- VIEW: BUTTON 6 - LATIHAN SOAL LINURIS -->
-        <section id="page-linuris" class="hidden space-y-6">
-            <div class="flex items-center justify-between bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
-                <button onclick="switchPage('home')" class="text-slate-600 hover:text-brandBlue font-bold flex items-center space-x-2">
-                    <i class="fa-solid fa-arrow-left"></i>
-                    <span>Kembali ke Beranda</span>
+        <!-- SECTION 6: LATIHAN SOAL LINURIS -->
+        <section id="sec-linuris" class="hidden space-y-6">
+            <div class="flex items-center justify-between">
+                <button onclick="showSection('beranda')" class="text-slate-600 hover:text-blue-600 font-bold text-sm flex items-center space-x-2">
+                    <i class="fa-solid fa-arrow-left"></i> <span>Kembali ke Beranda</span>
                 </button>
-                <span class="font-bold text-brandOrange bg-orange-50 px-3 py-1 rounded-full text-xs border border-orange-200">Latihan Soal Linuris</span>
+                <span class="bg-orange-100 text-orange-800 font-bold text-xs px-3 py-1 rounded-full">Menu 6</span>
             </div>
 
-            <!-- Inner Tabs (Literasi, Numerasi, Riset) -->
-            <div class="bg-white rounded-3xl p-6 md:p-8 shadow-md border border-slate-200 space-y-6">
-                
-                <div class="flex border-b border-slate-200 gap-4 overflow-x-auto pb-2">
-                    <button onclick="switchLinurisTab('literasi')" id="tab-literasi" class="active-tab py-2 px-4 font-bold text-sm rounded-t-lg transition flex items-center gap-2">
-                        <i class="fa-solid fa-book-open"></i>
-                        <span>1. Literasi (3 Soal)</span>
-                    </button>
-                    <button onclick="switchLinurisTab('numerasi')" id="tab-numerasi" class="text-slate-500 py-2 px-4 font-bold text-sm rounded-t-lg transition flex items-center gap-2">
-                        <i class="fa-solid fa-calculator"></i>
-                        <span>2. Numerasi (Penjumlahan)</span>
-                    </button>
-                    <button onclick="switchLinurisTab('riset')" id="tab-riset" class="text-slate-500 py-2 px-4 font-bold text-sm rounded-t-lg transition flex items-center gap-2">
-                        <i class="fa-solid fa-[#FF9600] fa-magnifying-glass-chart"></i>
-                        <span>3. Lembar Riset Siswa</span>
-                    </button>
+            <div class="bg-white rounded-3xl p-6 md:p-8 shadow-xl border-4 border-orange-400 space-y-8">
+                <div>
+                    <h2 class="title-font text-3xl font-extrabold text-orange-600 flex items-center space-x-3">
+                        <i class="fa-solid fa-pen-ruler"></i>
+                        <span>Latihan Soal LINURIS (Literasi, Numerasi, Riset)</span>
+                    </h2>
+                    <p class="text-slate-600 text-sm mt-1">Ayo latih kecerdasanmu dengan menjawab pertanyaan di bawah ini!</p>
                 </div>
 
-                <!-- TAB 1: LITERASI -->
-                <div id="content-literasi" class="space-y-8">
-                    
-                    <!-- Literasi Soal 1 -->
-                    <div class="bg-orange-50/50 p-5 rounded-3xl border-2 border-orange-200 space-y-4">
-                        <div class="bg-white p-4 rounded-2xl border border-orange-200 flex flex-col md:flex-row gap-4 items-center">
-                            <img src="https://i.pinimg.com/736x/36/e5/b1/36e5b195d09196ccb59dfbacce9254f3.jpg" 
-                                 alt="Stimulus Literasi 1" 
-                                 class="w-full md:w-48 h-32 object-cover rounded-xl shadow-xs"
-                                 onerror="this.src='https://placehold.co/300x200/FF9600/FFFFFF?text=Cerita+Budi'">
-                            <div class="text-xs md:text-sm text-slate-700 font-semibold space-y-1">
-                                <span class="bg-orange-500 text-white font-bold px-2.5 py-0.5 rounded-full text-xs">Stimulus Cerita 1</span>
-                                <p class="pt-1">1. Hari ini Budi bangun pagi-pagi sekali dengan hati gembira.</p>
-                                <p>2. Sebelum berangkat ke sekolah, Budi selalu berdoa memohon perlindungan Tuhan.</p>
-                                <p>3. Di kelas, Budi juga mengajak teman-temannya berdoa sebelum pelajaran dimulai.</p>
-                                <p>4. Budi selalu bersyukur atas semua kebaikan yang diterimanya setiap hari.</p>
-                            </div>
-                        </div>
-
-                        <div>
-                            <p class="font-bold text-slate-800 text-sm mb-3">Soal 1: Pengamalan sila Pancasila manakah yang dilakukan oleh Budi dalam cerita di atas?</p>
-                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                                <button onclick="checkAnswer('l1', 'A', false, this)" class="btn-l1 bg-white hover:bg-orange-100 border-2 border-slate-200 p-3 rounded-2xl font-bold text-xs text-left">A. Sila Kedua</button>
-                                <button onclick="checkAnswer('l1', 'B', true, this)" class="btn-l1 bg-white hover:bg-orange-100 border-2 border-slate-200 p-3 rounded-2xl font-bold text-xs text-left">B. Sila Pertama (Ketuhanan)</button>
-                                <button onclick="checkAnswer('l1', 'C', false, this)" class="btn-l1 bg-white hover:bg-orange-100 border-2 border-slate-200 p-3 rounded-2xl font-bold text-xs text-left">C. Sila Ketiga</button>
-                            </div>
-                            <div id="feedback-l1" class="hidden mt-3 p-3 rounded-xl text-xs font-bold"></div>
-                        </div>
+                <!-- SUB-SECTION A: LITERASI -->
+                <div class="space-y-6">
+                    <div class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-4 rounded-2xl flex items-center space-x-3 shadow-md">
+                        <i class="fa-solid fa-book-open text-2xl"></i>
+                        <h3 class="title-font text-xl font-bold">A. Soal Literasi (Pengamalan Pancasila di Sekolah)</h3>
                     </div>
 
-                    <!-- Literasi Soal 2 -->
-                    <div class="bg-orange-50/50 p-5 rounded-3xl border-2 border-orange-200 space-y-4">
-                        <div class="bg-white p-4 rounded-2xl border border-orange-200 flex flex-col md:flex-row gap-4 items-center">
-                            <img src="https://legutykids.com/wp-content/uploads/2022/07/Ilustrasi-Aku-Suka-Membantu-dan-Ramah-3.png" 
-                                 alt="Stimulus Literasi 2" 
-                                 class="w-full md:w-48 h-32 object-cover rounded-xl shadow-xs"
-                                 onerror="this.src='https://placehold.co/300x200/FF9600/FFFFFF?text=Cerita+Siti'">
-                            <div class="text-xs md:text-sm text-slate-700 font-semibold space-y-1">
-                                <span class="bg-orange-500 text-white font-bold px-2.5 py-0.5 rounded-full text-xs">Stimulus Cerita 2</span>
-                                <p class="pt-1">1. Saat jam istirahat sekolah, Siti melihat Lani terpeleset hingga pensilnya berserakan.</p>
-                                <p>2. Tanpa ragu, Siti langsung menghampiri dan membantunya berdiri.</p>
-                                <p>3. Siti juga membantu memunguti pensil Lani yang terjatuh di lantai.</p>
-                                <p>4. Lani mengucapkan terima kasih karena Siti sangat baik dan peduli.</p>
-                            </div>
-                        </div>
-
-                        <div>
-                            <p class="font-bold text-slate-800 text-sm mb-3">Soal 2: Perbuatan Siti membantu Lani merupakan contoh pengamalan Sila ke berapa?</p>
-                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                                <button onclick="checkAnswer('l2', 'A', true, this)" class="btn-l2 bg-white hover:bg-orange-100 border-2 border-slate-200 p-3 rounded-2xl font-bold text-xs text-left">A. Sila Ke-2 (Rantai Emas)</button>
-                                <button onclick="checkAnswer('l2', 'B', false, this)" class="btn-l2 bg-white hover:bg-orange-100 border-2 border-slate-200 p-3 rounded-2xl font-bold text-xs text-left">B. Sila Ke-4</button>
-                                <button onclick="checkAnswer('l2', 'C', false, this)" class="btn-l2 bg-white hover:bg-orange-100 border-2 border-slate-200 p-3 rounded-2xl font-bold text-xs text-left">C. Sila Ke-5</button>
-                            </div>
-                            <div id="feedback-l2" class="hidden mt-3 p-3 rounded-xl text-xs font-bold"></div>
-                        </div>
-                    </div>
-
-                    <!-- Literasi Soal 3 -->
-                    <div class="bg-orange-50/50 p-5 rounded-3xl border-2 border-orange-200 space-y-4">
-                        <div class="bg-white p-4 rounded-2xl border border-orange-200 flex flex-col md:flex-row gap-4 items-center">
+                    <!-- Soal Literasi 1 -->
+                    <div class="bg-slate-50 rounded-2xl p-5 border-2 border-slate-200 space-y-4">
+                        <div class="flex flex-col md:flex-row gap-4">
                             <img src="https://media.suara.com/pictures/653x366/2017/09/18/64062-ilustrasi-upacara-bendera-di-sekolah.jpg" 
-                                 alt="Stimulus Literasi 3" 
-                                 class="w-full md:w-48 h-32 object-cover rounded-xl shadow-xs"
-                                 onerror="this.src='https://placehold.co/300x200/FF9600/FFFFFF?text=Cerita+Upacara'">
-                            <div class="text-xs md:text-sm text-slate-700 font-semibold space-y-1">
-                                <span class="bg-orange-500 text-white font-bold px-2.5 py-0.5 rounded-full text-xs">Stimulus Cerita 3</span>
-                                <p class="pt-1">1. Hari Senin seluruh siswa SD berkumpul di lapangan sekolah.</p>
-                                <p>2. Mereka berdiri rapi mengikuti upacara bendera Merah Putih.</p>
-                                <p>3. Semua siswa menyanyikan lagu Indonesia Raya bersama-sama dengan bangga.</p>
-                                <p>4. Kegiatan ini menjaga rasa persatuan dan kebersamaan seluruh siswa.</p>
+                                 alt="Stimulus 1" 
+                                 class="w-full md:w-48 h-32 object-cover rounded-xl border border-slate-300 shadow-sm"
+                                 onerror="this.src='https://placehold.co/300x200/60a5fa/ffffff?text=Literasi+1'">
+                            <div class="space-y-2 flex-1">
+                                <span class="bg-blue-100 text-blue-800 text-xs font-bold px-2 py-0.5 rounded-full">Soal 1</span>
+                                <p class="text-sm text-slate-700 bg-white p-3 rounded-xl border border-slate-200 italic">
+                                    "Setiap hari Senin pagi, siswa SD Tarakanita berkumpul di lapangan sekolah. Mereka mengikuti kegiatan upacara bendera dengan penuh hikmat. Seluruh siswa berdiri tegak saat lagu Indonesia Raya dinyanyikan. Kegiatan ini menunjukkan wujud rasa cinta terhadap tanah air Indonesia."
+                                </p>
+                                <p class="font-bold text-slate-800 text-sm">Kegiatan upacara bendera pada cerita di atas merupakan pengamalan Pancasila sila ke-...</p>
                             </div>
                         </div>
 
-                        <div>
-                            <p class="font-bold text-slate-800 text-sm mb-3">Soal 3: Mengikuti upacara bendera secara tertib merupakan penerapan dari Sila...</p>
-                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                                <button onclick="checkAnswer('l3', 'A', false, this)" class="btn-l3 bg-white hover:bg-orange-100 border-2 border-slate-200 p-3 rounded-2xl font-bold text-xs text-left">A. Sila Ke-1</button>
-                                <button onclick="checkAnswer('l3', 'B', false, this)" class="btn-l3 bg-white hover:bg-orange-100 border-2 border-slate-200 p-3 rounded-2xl font-bold text-xs text-left">B. Sila Ke-2</button>
-                                <button onclick="checkAnswer('l3', 'C', true, this)" class="btn-l3 bg-white hover:bg-orange-100 border-2 border-slate-200 p-3 rounded-2xl font-bold text-xs text-left">C. Sila Ke-3 (Pohon Beringin)</button>
-                            </div>
-                            <div id="feedback-l3" class="hidden mt-3 p-3 rounded-xl text-xs font-bold"></div>
+                        <!-- Options -->
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            <button onclick="checkAnswer('lit1', 'A', false)" id="lit1-A" class="bg-white hover:bg-slate-100 text-slate-800 font-semibold p-3 rounded-xl border-2 border-slate-200 text-left text-sm flex items-center justify-between">
+                                <span>A. Sila Pertama</span>
+                                <i class="fa-regular fa-circle text-slate-400"></i>
+                            </button>
+                            <button onclick="checkAnswer('lit1', 'B', false)" id="lit1-B" class="bg-white hover:bg-slate-100 text-slate-800 font-semibold p-3 rounded-xl border-2 border-slate-200 text-left text-sm flex items-center justify-between">
+                                <span>B. Sila Kedua</span>
+                                <i class="fa-regular fa-circle text-slate-400"></i>
+                            </button>
+                            <button onclick="checkAnswer('lit1', 'C', true)" id="lit1-C" class="bg-white hover:bg-slate-100 text-slate-800 font-semibold p-3 rounded-xl border-2 border-slate-200 text-left text-sm flex items-center justify-between">
+                                <span>C. Sila Ketiga</span>
+                                <i class="fa-regular fa-circle text-slate-400"></i>
+                            </button>
                         </div>
+                        <div id="lit1-feedback" class="hidden text-xs font-bold p-2.5 rounded-xl"></div>
                     </div>
 
+                    <!-- Soal Literasi 2 -->
+                    <div class="bg-slate-50 rounded-2xl p-5 border-2 border-slate-200 space-y-4">
+                        <div class="flex flex-col md:flex-row gap-4">
+                            <img src="https://legutykids.com/wp-content/uploads/2022/07/Ilustrasi-Aku-Suka-Membantu-dan-Ramah-3.png" 
+                                 alt="Stimulus 2" 
+                                 class="w-full md:w-48 h-32 object-cover rounded-xl border border-slate-300 shadow-sm"
+                                 onerror="this.src='https://placehold.co/300x200/f472b6/ffffff?text=Literasi+2'">
+                            <div class="space-y-2 flex-1">
+                                <span class="bg-blue-100 text-blue-800 text-xs font-bold px-2 py-0.5 rounded-full">Soal 2</span>
+                                <p class="text-sm text-slate-700 bg-white p-3 rounded-xl border border-slate-200 italic">
+                                    "Saat jam istirahat, Budi melihat Edo tersandung dan jatuh di halaman sekolah. Lutut Edo terluka dan ia merasa kesakitan. Budi segera menghampiri Edo lalu membantunya berdiri. Budi membawa Edo ke ruang UKS untuk diobati."
+                                </p>
+                                <p class="font-bold text-slate-800 text-sm">Sikap Budi yang mau menolong teman yang terjatuh sesuai dengan sila...</p>
+                            </div>
+                        </div>
+
+                        <!-- Options -->
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            <button onclick="checkAnswer('lit2', 'A', false)" id="lit2-A" class="bg-white hover:bg-slate-100 text-slate-800 font-semibold p-3 rounded-xl border-2 border-slate-200 text-left text-sm flex items-center justify-between">
+                                <span>A. Sila Pertama</span>
+                                <i class="fa-regular fa-circle text-slate-400"></i>
+                            </button>
+                            <button onclick="checkAnswer('lit2', 'B', true)" id="lit2-B" class="bg-white hover:bg-slate-100 text-slate-800 font-semibold p-3 rounded-xl border-2 border-slate-200 text-left text-sm flex items-center justify-between">
+                                <span>B. Sila Kedua</span>
+                                <i class="fa-regular fa-circle text-slate-400"></i>
+                            </button>
+                            <button onclick="checkAnswer('lit2', 'C', false)" id="lit2-C" class="bg-white hover:bg-slate-100 text-slate-800 font-semibold p-3 rounded-xl border-2 border-slate-200 text-left text-sm flex items-center justify-between">
+                                <span>C. Sila Keempat</span>
+                                <i class="fa-regular fa-circle text-slate-400"></i>
+                            </button>
+                        </div>
+                        <div id="lit2-feedback" class="hidden text-xs font-bold p-2.5 rounded-xl"></div>
+                    </div>
+
+                    <!-- Soal Literasi 3 -->
+                    <div class="bg-slate-50 rounded-2xl p-5 border-2 border-slate-200 space-y-4">
+                        <div class="flex flex-col md:flex-row gap-4">
+                            <img src="https://img.magnific.com/vektor-premium/ilustrasi-vektor-anak-anak-pendidikan-siswa-melakukan-kerja-kelompok-siswa-belajar-dengan-guru_723224-4248.jpg" 
+                                 alt="Stimulus 3" 
+                                 class="w-full md:w-48 h-32 object-cover rounded-xl border border-slate-300 shadow-sm"
+                                 onerror="this.src='https://placehold.co/300x200/a855f7/ffffff?text=Literasi+3'">
+                            <div class="space-y-2 flex-1">
+                                <span class="bg-blue-100 text-blue-800 text-xs font-bold px-2 py-0.5 rounded-full">Soal 3</span>
+                                <p class="text-sm text-slate-700 bg-white p-3 rounded-xl border border-slate-200 italic">
+                                    "Siswa Kelas 1 SD berkumpul untuk menentukan warna baju olahraga kelas. Guru mengajak semua siswa berdiskusi dan memberikan pendapat. Setelah bermusyawarah, semua sepakat memilih warna biru. Semua anak senang dan menerima keputusan tersebut."
+                                </p>
+                                <p class="font-bold text-slate-800 text-sm">Musyawarah bersama untuk menentukan keputusan kelas melambangkan sila ke-...</p>
+                            </div>
+                        </div>
+
+                        <!-- Options -->
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            <button onclick="checkAnswer('lit3', 'A', false)" id="lit3-A" class="bg-white hover:bg-slate-100 text-slate-800 font-semibold p-3 rounded-xl border-2 border-slate-200 text-left text-sm flex items-center justify-between">
+                                <span>A. Sila Kedua</span>
+                                <i class="fa-regular fa-circle text-slate-400"></i>
+                            </button>
+                            <button onclick="checkAnswer('lit3', 'B', false)" id="lit3-B" class="bg-white hover:bg-slate-100 text-slate-800 font-semibold p-3 rounded-xl border-2 border-slate-200 text-left text-sm flex items-center justify-between">
+                                <span>B. Sila Ketiga</span>
+                                <i class="fa-regular fa-circle text-slate-400"></i>
+                            </button>
+                            <button onclick="checkAnswer('lit3', 'C', true)" id="lit3-C" class="bg-white hover:bg-slate-100 text-slate-800 font-semibold p-3 rounded-xl border-2 border-slate-200 text-left text-sm flex items-center justify-between">
+                                <span>C. Sila Keempat</span>
+                                <i class="fa-regular fa-circle text-slate-400"></i>
+                            </button>
+                        </div>
+                        <div id="lit3-feedback" class="hidden text-xs font-bold p-2.5 rounded-xl"></div>
+                    </div>
                 </div>
 
-                <!-- TAB 2: NUMERASI -->
-                <div id="content-numerasi" class="hidden space-y-8">
-                    
-                    <!-- Numerasi Soal 1 -->
-                    <div class="bg-blue-50/50 p-5 rounded-3xl border-2 border-blue-200 space-y-4">
-                        <div class="bg-white p-4 rounded-2xl border border-blue-200">
-                            <span class="bg-brandBlue text-white font-bold px-2.5 py-0.5 rounded-full text-xs">Soal Numerasi 1</span>
-                            <p class="text-sm text-slate-700 font-bold mt-2 leading-relaxed">
-                                Hari ini terdapat 3 anak yang berdoa dengan baik, dan terdapat 4 anak yang mau berbagi makanan dengan temannya. Berapakah jumlah anak yang menerapkan sila Pancasila?
-                            </p>
-                        </div>
-
-                        <div>
-                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                                <button onclick="checkAnswer('n1', 'A', false, this)" class="btn-n1 bg-white hover:bg-blue-100 border-2 border-slate-200 p-3 rounded-2xl font-bold text-sm text-center">A. 6 anak</button>
-                                <button onclick="checkAnswer('n1', 'B', true, this)" class="btn-n1 bg-white hover:bg-blue-100 border-2 border-slate-200 p-3 rounded-2xl font-bold text-sm text-center">B. 7 anak</button>
-                                <button onclick="checkAnswer('n1', 'C', false, this)" class="btn-n1 bg-white hover:bg-blue-100 border-2 border-slate-200 p-3 rounded-2xl font-bold text-sm text-center">C. 8 anak</button>
-                            </div>
-                            <div id="feedback-n1" class="hidden mt-3 p-3 rounded-xl text-xs font-bold"></div>
-                        </div>
+                <!-- SUB-SECTION B: NUMERASI -->
+                <div class="space-y-6 pt-4 border-t-2 border-slate-100">
+                    <div class="bg-gradient-to-r from-emerald-500 to-teal-600 text-white p-4 rounded-2xl flex items-center space-x-3 shadow-md">
+                        <i class="fa-solid fa-calculator text-2xl"></i>
+                        <h3 class="title-font text-xl font-bold">B. Soal Numerasi (Penjumlahan sampai 20)</h3>
                     </div>
 
-                    <!-- Numerasi Soal 2 -->
-                    <div class="bg-blue-50/50 p-5 rounded-3xl border-2 border-blue-200 space-y-4">
-                        <div class="bg-white p-4 rounded-2xl border border-blue-200">
-                            <span class="bg-brandBlue text-white font-bold px-2.5 py-0.5 rounded-full text-xs">Soal Numerasi 2</span>
-                            <p class="text-sm text-slate-700 font-bold mt-2 leading-relaxed">
-                                Saat kerja bakti sekolah (Sila 3), Edo mengumpulkan 8 sampah botol plastik dan Beni mengumpulkan 6 sampah kardus bekas. Berapa total sampah yang mereka kumpulkan bersama?
+                    <!-- Soal Numerasi 1 (Exact from user prompt) -->
+                    <div class="bg-slate-50 rounded-2xl p-5 border-2 border-slate-200 space-y-4">
+                        <div class="space-y-2">
+                            <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-2 py-0.5 rounded-full">Soal Numerasi 1</span>
+                            <p class="text-sm text-slate-700 bg-white p-3 rounded-xl border border-slate-200 italic">
+                                Hari ini terdapat 3 anak yang berdoa dengan baik, dan terdapat 4 anak yang mau berbagi makanan dengan temannya.
                             </p>
+                            <p class="font-bold text-slate-800 text-sm">Berapakah jumlah total anak yang menerapkan sila Pancasila?</p>
                         </div>
 
-                        <div>
-                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                                <button onclick="checkAnswer('n2', 'A', false, this)" class="btn-n2 bg-white hover:bg-blue-100 border-2 border-slate-200 p-3 rounded-2xl font-bold text-sm text-center">A. 12 sampah</button>
-                                <button onclick="checkAnswer('n2', 'B', true, this)" class="btn-n2 bg-white hover:bg-blue-100 border-2 border-slate-200 p-3 rounded-2xl font-bold text-sm text-center">B. 14 sampah</button>
-                                <button onclick="checkAnswer('n2', 'C', false, this)" class="btn-n2 bg-white hover:bg-blue-100 border-2 border-slate-200 p-3 rounded-2xl font-bold text-sm text-center">C. 15 sampah</button>
-                            </div>
-                            <div id="feedback-n2" class="hidden mt-3 p-3 rounded-xl text-xs font-bold"></div>
+                        <!-- Options -->
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            <button onclick="checkAnswer('num1', 'A', false)" id="num1-A" class="bg-white hover:bg-slate-100 text-slate-800 font-semibold p-3 rounded-xl border-2 border-slate-200 text-left text-sm flex items-center justify-between">
+                                <span>A. 6 anak</span>
+                                <i class="fa-regular fa-circle text-slate-400"></i>
+                            </button>
+                            <button onclick="checkAnswer('num1', 'B', true)" id="num1-B" class="bg-white hover:bg-slate-100 text-slate-800 font-semibold p-3 rounded-xl border-2 border-slate-200 text-left text-sm flex items-center justify-between">
+                                <span>B. 7 anak</span>
+                                <i class="fa-regular fa-circle text-slate-400"></i>
+                            </button>
+                            <button onclick="checkAnswer('num1', 'C', false)" id="num1-C" class="bg-white hover:bg-slate-100 text-slate-800 font-semibold p-3 rounded-xl border-2 border-slate-200 text-left text-sm flex items-center justify-between">
+                                <span>C. 8 anak</span>
+                                <i class="fa-regular fa-circle text-slate-400"></i>
+                            </button>
                         </div>
+                        <div id="num1-feedback" class="hidden text-xs font-bold p-2.5 rounded-xl"></div>
                     </div>
 
-                    <!-- Numerasi Soal 3 -->
-                    <div class="bg-blue-50/50 p-5 rounded-3xl border-2 border-blue-200 space-y-4">
-                        <div class="bg-white p-4 rounded-2xl border border-blue-200">
-                            <span class="bg-brandBlue text-white font-bold px-2.5 py-0.5 rounded-full text-xs">Soal Numerasi 3</span>
-                            <p class="text-sm text-slate-700 font-bold mt-2 leading-relaxed">
-                                Di kelas 1 SD, ada 9 anak yang rapi mengikuti upacara dan 10 anak yang berani berpendapat saat musyawarah. Berapakah jumlah seluruh anak tersebut?
+                    <!-- Soal Numerasi 2 -->
+                    <div class="bg-slate-50 rounded-2xl p-5 border-2 border-slate-200 space-y-4">
+                        <div class="space-y-2">
+                            <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-2 py-0.5 rounded-full">Soal Numerasi 2</span>
+                            <p class="text-sm text-slate-700 bg-white p-3 rounded-xl border border-slate-200 italic">
+                                Di perpustakaan kelas, terdapat 8 siswa sedang membaca buku Pancasila dan 6 siswa sedang bekerja kelompok merawat tanaman.
                             </p>
+                            <p class="font-bold text-slate-800 text-sm">Berapa jumlah keseluruhan anak yang berada di perpustakaan? (8 + 6 = ...)</p>
                         </div>
 
-                        <div>
-                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                                <button onclick="checkAnswer('n3', 'A', false, this)" class="btn-n3 bg-white hover:bg-blue-100 border-2 border-slate-200 p-3 rounded-2xl font-bold text-sm text-center">A. 18 anak</button>
-                                <button onclick="checkAnswer('n3', 'B', true, this)" class="btn-n3 bg-white hover:bg-blue-100 border-2 border-slate-200 p-3 rounded-2xl font-bold text-sm text-center">B. 19 anak</button>
-                                <button onclick="checkAnswer('n3', 'C', false, this)" class="btn-n3 bg-white hover:bg-blue-100 border-2 border-slate-200 p-3 rounded-2xl font-bold text-sm text-center">C. 20 anak</button>
-                            </div>
-                            <div id="feedback-n3" class="hidden mt-3 p-3 rounded-xl text-xs font-bold"></div>
+                        <!-- Options -->
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            <button onclick="checkAnswer('num2', 'A', false)" id="num2-A" class="bg-white hover:bg-slate-100 text-slate-800 font-semibold p-3 rounded-xl border-2 border-slate-200 text-left text-sm flex items-center justify-between">
+                                <span>A. 13 anak</span>
+                                <i class="fa-regular fa-circle text-slate-400"></i>
+                            </button>
+                            <button onclick="checkAnswer('num2', 'B', true)" id="num2-B" class="bg-white hover:bg-slate-100 text-slate-800 font-semibold p-3 rounded-xl border-2 border-slate-200 text-left text-sm flex items-center justify-between">
+                                <span>B. 14 anak</span>
+                                <i class="fa-regular fa-circle text-slate-400"></i>
+                            </button>
+                            <button onclick="checkAnswer('num2', 'C', false)" id="num2-C" class="bg-white hover:bg-slate-100 text-slate-800 font-semibold p-3 rounded-xl border-2 border-slate-200 text-left text-sm flex items-center justify-between">
+                                <span>C. 15 anak</span>
+                                <i class="fa-regular fa-circle text-slate-400"></i>
+                            </button>
                         </div>
+                        <div id="num2-feedback" class="hidden text-xs font-bold p-2.5 rounded-xl"></div>
                     </div>
-
                 </div>
 
-                <!-- TAB 3: RISET (TABEL INTERAKTIF) -->
-                <div id="content-riset" class="hidden space-y-6">
-                    
-                    <!-- Top Instruction -->
-                    <div class="bg-purple-100 p-4 rounded-2xl border border-purple-200 text-purple-900">
-                        <p class="text-sm font-extrabold flex items-center gap-2">
-                            <i class="fa-solid fa-clipboard-list text-brandPurple text-lg"></i>
-                            Instruksi untuk Peserta Didik:
-                        </p>
-                        <p class="text-xs font-bold mt-1 bg-white p-3 rounded-xl border border-purple-200 text-slate-800">
-                            Lakukanlah wawancara kepada teman-temanmu untuk mengetahui pengamalan pancasila mana yang sudah dilakukan hari ini!
+                <!-- SUB-SECTION C: RISET INTERAKTIF -->
+                <div class="space-y-6 pt-4 border-t-2 border-slate-100">
+                    <div class="bg-gradient-to-r from-orange-500 to-amber-600 text-white p-4 rounded-2xl flex items-center space-x-3 shadow-md">
+                        <i class="fa-solid fa-clipboard-question text-2xl"></i>
+                        <h3 class="title-font text-xl font-bold">C. Pembelajaran Riset (Wawancara Pengamalan Pancasila)</h3>
+                    </div>
+
+                    <!-- Instruksi Atas Tabel -->
+                    <div class="bg-amber-50 p-4 rounded-2xl border-2 border-amber-300 text-slate-800 space-y-1">
+                        <span class="bg-amber-400 text-amber-950 text-xs font-bold px-2 py-0.5 rounded-full uppercase">Instruksi Guru</span>
+                        <p class="font-bold text-sm md:text-base text-amber-900">
+                            "Lakukanlah wawancara kepada teman-temanmu untuk mengetahui pengamalan pancasila mana yang sudah dilakukan hari ini!"
                         </p>
                     </div>
 
-                    <!-- Interactive Survey Table -->
-                    <div class="overflow-x-auto rounded-2xl border border-slate-200 shadow-sm">
-                        <table class="w-full text-left text-xs md:text-sm">
-                            <thead class="bg-slate-800 text-white font-bold">
-                                <tr>
-                                    <th class="p-3 text-center w-14">Nomor</th>
-                                    <th class="p-3">Nama Siswa</th>
-                                    <th class="p-3 w-40">Nomor Pancasila</th>
-                                    <th class="p-3 text-center w-20">Aksi</th>
+                    <!-- Form Tambah data wawancara -->
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-3">
+                        <h4 class="font-bold text-slate-700 text-sm">Input Wawancara Teman:</h4>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            <input type="text" id="inputNama" placeholder="Nama Teman (contoh: Siti)" class="px-3 py-2 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400">
+                            <select id="selectSila" class="px-3 py-2 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400">
+                                <option value="1">Sila 1 (Berdoa / Beribadah)</option>
+                                <option value="2">Sila 2 (Menolong / Sopan)</option>
+                                <option value="3">Sila 3 (Rukun / Upacara)</option>
+                                <option value="4">Sila 4 (Musyawarah / Diskusi)</option>
+                                <option value="5">Sila 5 (Berbagi / Adil)</option>
+                            </select>
+                            <button onclick="addWawancaraRow()" class="bg-orange-500 hover:bg-orange-600 text-white font-bold px-4 py-2 rounded-xl text-sm shadow-md btn-bounce flex items-center justify-center space-x-2">
+                                <i class="fa-solid fa-plus"></i>
+                                <span>Tambah Hasil</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Tabel Wawancara (4 Kolom) -->
+                    <div class="overflow-x-auto rounded-2xl border-2 border-orange-200 shadow-sm">
+                        <table class="w-full text-left border-collapse bg-white">
+                            <thead>
+                                <tr class="bg-orange-500 text-white text-xs md:text-sm title-font">
+                                    <th class="p-3 border-b border-orange-600 text-center w-16">Nomor</th>
+                                    <th class="p-3 border-b border-orange-600">Nama Siswa</th>
+                                    <th class="p-3 border-b border-orange-600 text-center">Nomor Pancasila</th>
+                                    <th class="p-3 border-b border-orange-600 text-center">Aksi</th>
                                 </tr>
                             </thead>
-                            <tbody id="table-riset-body" class="divide-y divide-slate-200 bg-white">
-                                <!-- Pre-populated Sample Rows -->
+                            <tbody id="tabelRisetBody" class="text-xs md:text-sm divide-y divide-slate-100">
+                                <!-- Pre-populated example data -->
                                 <tr>
                                     <td class="p-3 text-center font-bold text-slate-500">1</td>
-                                    <td class="p-3">
-                                        <input type="text" value="Budi Pekerti" class="w-full p-2 rounded-xl border border-slate-300 font-semibold focus:outline-none focus:border-brandBlue">
-                                    </td>
-                                    <td class="p-3">
-                                        <select onchange="calculateSurvey()" class="select-sila w-full p-2 rounded-xl border border-slate-300 font-semibold focus:outline-none focus:border-brandBlue bg-slate-50">
-                                            <option value="1">Sila 1 (Bintang)</option>
-                                            <option value="2">Sila 2 (Rantai)</option>
-                                            <option value="3">Sila 3 (Pohon)</option>
-                                            <option value="4">Sila 4 (Banteng)</option>
-                                            <option value="5">Sila 5 (Padi Kapas)</option>
-                                        </select>
+                                    <td class="p-3 font-medium">Budi Santoso</td>
+                                    <td class="p-3 text-center">
+                                        <span class="bg-yellow-100 text-yellow-800 font-bold px-2.5 py-1 rounded-full text-xs">Sila 1</span>
                                     </td>
                                     <td class="p-3 text-center">
-                                        <button onclick="deleteRow(this)" class="text-red-500 hover:text-red-700 p-2"><i class="fa-solid fa-trash"></i></button>
+                                        <button onclick="removeWawancaraRow(this)" class="text-red-500 hover:text-red-700 text-xs"><i class="fa-solid fa-trash"></i></button>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="p-3 text-center font-bold text-slate-500">2</td>
-                                    <td class="p-3">
-                                        <input type="text" value="Siti Aminah" class="w-full p-2 rounded-xl border border-slate-300 font-semibold focus:outline-none focus:border-brandBlue">
-                                    </td>
-                                    <td class="p-3">
-                                        <select onchange="calculateSurvey()" class="select-sila w-full p-2 rounded-xl border border-slate-300 font-semibold focus:outline-none focus:border-brandBlue bg-slate-50">
-                                            <option value="1">Sila 1 (Bintang)</option>
-                                            <option value="2" selected>Sila 2 (Rantai)</option>
-                                            <option value="3">Sila 3 (Pohon)</option>
-                                            <option value="4">Sila 4 (Banteng)</option>
-                                            <option value="5">Sila 5 (Padi Kapas)</option>
-                                        </select>
+                                    <td class="p-3 font-medium">Siti Rahma</td>
+                                    <td class="p-3 text-center">
+                                        <span class="bg-red-100 text-red-800 font-bold px-2.5 py-1 rounded-full text-xs">Sila 2</span>
                                     </td>
                                     <td class="p-3 text-center">
-                                        <button onclick="deleteRow(this)" class="text-red-500 hover:text-red-700 p-2"><i class="fa-solid fa-trash"></i></button>
+                                        <button onclick="removeWawancaraRow(this)" class="text-red-500 hover:text-red-700 text-xs"><i class="fa-solid fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 text-center font-bold text-slate-500">3</td>
+                                    <td class="p-3 font-medium">Edo Putra</td>
+                                    <td class="p-3 text-center">
+                                        <span class="bg-cyan-100 text-cyan-800 font-bold px-2.5 py-1 rounded-full text-xs">Sila 5</span>
+                                    </td>
+                                    <td class="p-3 text-center">
+                                        <button onclick="removeWawancaraRow(this)" class="text-red-500 hover:text-red-700 text-xs"><i class="fa-solid fa-trash"></i></button>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
 
-                    <!-- Add Student Row Button -->
-                    <div class="flex justify-between items-center">
-                        <button onclick="addSurveyRow()" class="bg-brandGreen hover:bg-emerald-600 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow flex items-center gap-2">
-                            <i class="fa-solid fa-plus"></i>
-                            <span>Tambah Teman Wawancara</span>
-                        </button>
-                    </div>
-
-                    <!-- Bottom Instruction & Summary Counter Card -->
-                    <div class="bg-amber-50 p-5 rounded-3xl border-2 border-amber-200 space-y-3">
-                        <p class="text-xs md:text-sm font-bold text-amber-900 flex items-center gap-2">
-                            <i class="fa-solid fa-calculator text-amber-600"></i>
-                            Instruksi Perhitungan Riset:
-                        </p>
-                        <p class="text-xs text-slate-700 font-semibold bg-white p-3 rounded-xl border border-amber-200">
-                            Setelah selesai wawancara, hitunglah berapa anak yang sudah menerapkan sila pertama sampai kelima.
-                        </p>
-
-                        <!-- Summary Counter Dashboard -->
-                        <div class="pt-2">
-                            <h4 class="text-xs font-bold text-slate-500 uppercase mb-2">Hasil Perhitungan Otomatis:</h4>
-                            <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 text-center">
-                                <div class="bg-white p-3 rounded-xl border border-amber-300 shadow-xs">
-                                    <p class="text-xs font-bold text-amber-600">Sila 1</p>
-                                    <p id="count-sila-1" class="text-xl font-extrabold text-slate-800">1</p>
-                                    <p class="text-[10px] text-slate-400">Anak</p>
-                                </div>
-                                <div class="bg-white p-3 rounded-xl border border-rose-300 shadow-xs">
-                                    <p class="text-xs font-bold text-rose-600">Sila 2</p>
-                                    <p id="count-sila-2" class="text-xl font-extrabold text-slate-800">1</p>
-                                    <p class="text-[10px] text-slate-400">Anak</p>
-                                </div>
-                                <div class="bg-white p-3 rounded-xl border border-emerald-300 shadow-xs">
-                                    <p class="text-xs font-bold text-emerald-600">Sila 3</p>
-                                    <p id="count-sila-3" class="text-xl font-extrabold text-slate-800">0</p>
-                                    <p class="text-[10px] text-slate-400">Anak</p>
-                                </div>
-                                <div class="bg-white p-3 rounded-xl border border-sky-300 shadow-xs">
-                                    <p class="text-xs font-bold text-sky-600">Sila 4</p>
-                                    <p id="count-sila-4" class="text-xl font-extrabold text-slate-800">0</p>
-                                    <p class="text-[10px] text-slate-400">Anak</p>
-                                </div>
-                                <div class="bg-white p-3 rounded-xl border border-purple-300 shadow-xs col-span-2 sm:col-span-1">
-                                    <p class="text-xs font-bold text-purple-600">Sila 5</p>
-                                    <p id="count-sila-5" class="text-xl font-extrabold text-slate-800">0</p>
-                                    <p class="text-[10px] text-slate-400">Anak</p>
-                                </div>
-                            </div>
+                    <!-- Instruksi Bawah Tabel & Counter Summary -->
+                    <div class="bg-gradient-to-r from-orange-100 to-amber-100 p-5 rounded-2xl border-2 border-orange-300 space-y-4">
+                        <div class="space-y-1">
+                            <span class="bg-orange-500 text-white text-xs font-bold px-2.5 py-0.5 rounded-full uppercase">Tugas Hitung Riset</span>
+                            <p class="font-bold text-slate-800 text-sm md:text-base">
+                                "Setelah selesai wawancara, hitunglah berapa anak yang sudah menerapkan sila pertama sampai kelima."
+                            </p>
                         </div>
 
+                        <!-- Live Interactive Counter Cards -->
+                        <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 pt-2">
+                            <div class="bg-white p-3 rounded-xl text-center border border-orange-200 shadow-sm">
+                                <span class="text-xs font-bold text-slate-500 block">Sila 1</span>
+                                <span id="countSila1" class="title-font text-2xl font-bold text-yellow-600">1</span>
+                                <span class="text-xs text-slate-400 block">anak</span>
+                            </div>
+                            <div class="bg-white p-3 rounded-xl text-center border border-orange-200 shadow-sm">
+                                <span class="text-xs font-bold text-slate-500 block">Sila 2</span>
+                                <span id="countSila2" class="title-font text-2xl font-bold text-red-500">1</span>
+                                <span class="text-xs text-slate-400 block">anak</span>
+                            </div>
+                            <div class="bg-white p-3 rounded-xl text-center border border-orange-200 shadow-sm">
+                                <span class="text-xs font-bold text-slate-500 block">Sila 3</span>
+                                <span id="countSila3" class="title-font text-2xl font-bold text-emerald-600">0</span>
+                                <span class="text-xs text-slate-400 block">anak</span>
+                            </div>
+                            <div class="bg-white p-3 rounded-xl text-center border border-orange-200 shadow-sm">
+                                <span class="text-xs font-bold text-slate-500 block">Sila 4</span>
+                                <span id="countSila4" class="title-font text-2xl font-bold text-purple-600">0</span>
+                                <span class="text-xs text-slate-400 block">anak</span>
+                            </div>
+                            <div class="bg-white p-3 rounded-xl text-center border border-orange-200 shadow-sm col-span-2 sm:col-span-1">
+                                <span class="text-xs font-bold text-slate-500 block">Sila 5</span>
+                                <span id="countSila5" class="title-font text-2xl font-bold text-cyan-600">1</span>
+                                <span class="text-xs text-slate-400 block">anak</span>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
-
             </div>
         </section>
 
-        <!-- VIEW: BUTTON 7 - LATIHAN PEMBELAJARAN (BLOOKET) -->
-        <section id="page-blooket" class="hidden space-y-6">
-            <div class="flex items-center justify-between bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
-                <button onclick="switchPage('home')" class="text-slate-600 hover:text-brandBlue font-bold flex items-center space-x-2">
-                    <i class="fa-solid fa-arrow-left"></i>
-                    <span>Kembali ke Beranda</span>
+        <!-- SECTION 7: LATIHAN PEMBELAJARAN (BLOOKET) -->
+        <section id="sec-blooket" class="hidden space-y-6">
+            <div class="flex items-center justify-between">
+                <button onclick="showSection('beranda')" class="text-slate-600 hover:text-blue-600 font-bold text-sm flex items-center space-x-2">
+                    <i class="fa-solid fa-arrow-left"></i> <span>Kembali ke Beranda</span>
                 </button>
-                <span class="font-bold text-teal-600 bg-teal-50 px-3 py-1 rounded-full text-xs border border-teal-200">Latihan Blooket</span>
+                <span class="bg-pink-100 text-pink-800 font-bold text-xs px-3 py-1 rounded-full">Menu 7</span>
             </div>
 
-            <div class="bg-white rounded-3xl p-6 md:p-8 shadow-md border border-slate-200 space-y-6">
-                <div>
-                    <h2 class="text-2xl md:text-3xl font-extrabold text-slate-800 flex items-center gap-3">
-                        <i class="fa-solid fa-gamepad text-teal-600"></i>
+            <div class="bg-white rounded-3xl p-6 md:p-8 shadow-xl border-4 border-pink-400 text-center space-y-6">
+                <div class="max-w-xl mx-auto space-y-3">
+                    <div class="w-20 h-20 rounded-3xl bg-pink-500 text-white flex items-center justify-center text-4xl mx-auto shadow-lg animate-bounce">
+                        <i class="fa-solid fa-gamepad"></i>
+                    </div>
+                    <span class="bg-pink-100 text-pink-700 font-bold text-xs px-3 py-1 rounded-full inline-block">Kuis Game Interaktif</span>
+                    <h2 class="title-font text-3xl font-extrabold text-slate-800">
                         Latihan Materi: Simbol dan Pengamalan Pancasila
                     </h2>
-                    <p class="text-slate-500 text-sm mt-1">Mainkan kuis interaktif Blooket ini bersama guru dan teman-temanmu!</p>
+                    <p class="text-slate-600 text-sm">
+                        Ayo bermain game kuis seru di Blooket untuk menguji pemahamanmu tentang simbol dan pengamalan Pancasila!
+                    </p>
                 </div>
 
-                <div class="bg-gradient-to-br from-teal-500 to-emerald-600 rounded-3xl p-8 text-white text-center space-y-6 shadow-xl">
-                    <div class="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto text-4xl">
-                        🎮
-                    </div>
-                    <div>
-                        <h3 class="text-2xl md:text-3xl font-extrabold">Siap Bertanding di Blooket?</h3>
-                        <p class="text-teal-100 text-sm mt-2 max-w-lg mx-auto">
-                            Klik tombol di bawah ini untuk membuka permainan kuis interaktif Blooket dan uji pemahamanmu!
-                        </p>
-                    </div>
-                    <div>
-                        <a href="https://play.blooket.com/play?hwId=6a9fa3ce014d482047f2bc6b" 
-                           target="_blank" 
-                           rel="noopener noreferrer" 
-                           class="inline-flex items-center gap-3 bg-brandYellow hover:bg-amber-400 text-slate-900 font-extrabold text-base px-8 py-4 rounded-2xl shadow-lg transition hover:scale-105">
-                            <i class="fa-solid fa-play text-xl"></i>
-                            <span>Mulai Mainkan Blooket Sekarang</span>
-                        </a>
-                    </div>
+                <div class="bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-3xl p-6 md:p-8 max-w-2xl mx-auto shadow-2xl border-4 border-white space-y-5">
+                    <h3 class="title-font text-2xl font-bold">Siap Bertanding Game Blooket? 🚀</h3>
+                    <p class="text-pink-100 text-sm">
+                        Klik tombol emas di bawah ini untuk langsung membuka permainan latihan di website www.blooket.com!
+                    </p>
+                    <a href="https://play.blooket.com/play?hwId=6a9fa3ce014d482047f2bc6b" 
+                       target="_blank" 
+                       rel="noopener noreferrer" 
+                       class="inline-flex items-center space-x-3 bg-yellow-400 hover:bg-yellow-300 text-slate-900 title-font text-xl font-extrabold px-8 py-4 rounded-2xl shadow-xl transform transition hover:-translate-y-1 btn-bounce">
+                        <i class="fa-solid fa-play text-2xl"></i>
+                        <span>MAIN BLOOKET SEKARANG</span>
+                    </a>
                 </div>
 
-                <!-- Fallback / Embed Preview Card -->
-                <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200">
-                    <p class="text-xs font-bold text-slate-500 uppercase mb-2">Info Tautan Blooket:</p>
-                    <code class="text-xs text-teal-700 bg-white p-2.5 rounded-xl border border-slate-200 block break-all font-mono">
-                        https://play.blooket.com/play?hwId=6a9fa3ce014d482047f2bc6b
-                    </code>
+                <div class="pt-4 text-xs text-slate-400">
+                    Link resmi Blooket: <span class="font-mono text-slate-600">https://play.blooket.com/play?hwId=6a9fa3ce014d482047f2bc6b</span>
                 </div>
             </div>
         </section>
 
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-white border-t border-slate-200 py-6 mt-10">
-        <div class="max-w-6xl mx-auto px-4 text-center space-y-2">
-            <p class="text-xs font-bold text-slate-500">
-                Aplikasi Interaktif Pendidikan Pancasila Kelas 1 SD • Sekolah Tarakanita
-            </p>
-            <p class="text-[11px] text-slate-400">
-                Terintegrasi dengan Literasi, Numerasi, Riset & Nilai-Nilai Ketarakanitaan (Competence, Compassion, Community).
-            </p>
-        </div>
-    </footer>
-
     <script>
-        // Speech Synthesis Helper
+        // Section Navigation Helper Function
+        function showSection(sectionId) {
+            const sections = ['beranda', 'identitas', 'simbol', 'pengamalan', 'tarakanita', 'video', 'linuris', 'blooket'];
+            
+            sections.forEach(id => {
+                const sec = document.getElementById(`sec-${id}`);
+                if (sec) {
+                    if (id === sectionId) {
+                        sec.classList.remove('hidden');
+                    } else {
+                        sec.classList.add('hidden');
+                    }
+                }
+            });
+
+            // Scroll to top of window smoothly
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Web Speech API for Reading Out Loud
         function speakText(text) {
             if ('speechSynthesis' in window) {
                 // Cancel ongoing speech
@@ -1118,153 +1224,140 @@
 
                 const utterance = new SpeechSynthesisUtterance(text);
                 utterance.lang = 'id-ID';
-                utterance.rate = 0.9; // Slightly slower for grade 1 kids
-                utterance.pitch = 1.1; // Friendly pitch
+                utterance.rate = 0.9; // slightly slower for grade 1 children
+                utterance.pitch = 1.1;
+
                 window.speechSynthesis.speak(utterance);
             } else {
-                alert("Fitur suara tidak didukung oleh peramban Anda.");
+                alert('Fitur suara tidak didukung oleh browser Anda.');
             }
         }
 
-        // Page Navigation Switcher
-        function switchPage(pageId) {
-            // Cancel speech when changing page
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel();
+        // Quiz Answer Verification System
+        function checkAnswer(questionId, selectedOption, isCorrect) {
+            const feedbackElem = document.getElementById(`${questionId}-feedback`);
+            const options = ['A', 'B', 'C'];
+
+            // Reset all option styles for this question
+            options.forEach(opt => {
+                const btn = document.getElementById(`${questionId}-${opt}`);
+                if (btn) {
+                    btn.className = "bg-white text-slate-800 font-semibold p-3 rounded-xl border-2 border-slate-200 text-left text-sm flex items-center justify-between";
+                }
+            });
+
+            const selectedBtn = document.getElementById(`${questionId}-${selectedOption}`);
+
+            if (isCorrect) {
+                if (selectedBtn) {
+                    selectedBtn.className = "bg-emerald-100 text-emerald-900 font-bold p-3 rounded-xl border-2 border-emerald-500 text-left text-sm flex items-center justify-between";
+                }
+                if (feedbackElem) {
+                    feedbackElem.classList.remove('hidden', 'bg-red-100', 'text-red-800');
+                    feedbackElem.classList.add('bg-emerald-100', 'text-emerald-800');
+                    feedbackElem.innerHTML = '🎉 <span class="font-extrabold">Hebat Sekali!</span> Jawaban kamu BENAR! 🌟';
+                }
+                speakText('Hebat sekali! Jawaban kamu benar!');
+            } else {
+                if (selectedBtn) {
+                    selectedBtn.className = "bg-red-100 text-red-900 font-bold p-3 rounded-xl border-2 border-red-400 text-left text-sm flex items-center justify-between";
+                }
+                if (feedbackElem) {
+                    feedbackElem.classList.remove('hidden', 'bg-emerald-100', 'text-emerald-800');
+                    feedbackElem.classList.add('bg-red-100', 'text-red-800');
+                    feedbackElem.innerHTML = '❌ <span class="font-extrabold">Ayo Coba Lagi!</span> Jawabanmu belum tepat, semangat ya!';
+                }
+                speakText('Ayo coba lagi, kamu pasti bisa!');
+            }
+        }
+
+        // Research Wawancara Table Dynamic Handlers
+        function addWawancaraRow() {
+            const namaInput = document.getElementById('inputNama');
+            const silaSelect = document.getElementById('selectSila');
+            const tbody = document.getElementById('tabelRisetBody');
+
+            const nama = namaInput.value.trim();
+            const silaNo = silaSelect.value;
+
+            if (!nama) {
+                alert('Silakan tulis nama siswa terlebih dahulu!');
+                return;
             }
 
-            const pages = ['home', 'identitas', 'simbol', 'pengamalan', 'tarakanita', 'video', 'linuris', 'blooket'];
-            pages.forEach(p => {
-                const el = document.getElementById('page-' + p);
-                if (el) {
-                    if (p === pageId) {
-                        el.classList.remove('hidden');
-                    } else {
-                        el.classList.add('hidden');
+            const rowCount = tbody.children.length + 1;
+            const newRow = document.createElement('tr');
+
+            // Color badge map
+            const badgeClasses = {
+                '1': 'bg-yellow-100 text-yellow-800',
+                '2': 'bg-red-100 text-red-800',
+                '3': 'bg-emerald-100 text-emerald-800',
+                '4': 'bg-purple-100 text-purple-800',
+                '5': 'bg-cyan-100 text-cyan-800'
+            };
+
+            newRow.innerHTML = `
+                <td class="p-3 text-center font-bold text-slate-500">${rowCount}</td>
+                <td class="p-3 font-medium">${escapeHtml(nama)}</td>
+                <td class="p-3 text-center">
+                    <span class="${badgeClasses[silaNo]} font-bold px-2.5 py-1 rounded-full text-xs">Sila ${silaNo}</span>
+                </td>
+                <td class="p-3 text-center">
+                    <button onclick="removeWawancaraRow(this)" class="text-red-500 hover:text-red-700 text-xs"><i class="fa-solid fa-trash"></i></button>
+                </td>
+            `;
+
+            tbody.appendChild(newRow);
+            namaInput.value = '';
+            updateRisetSummary();
+        }
+
+        function removeWawancaraRow(btn) {
+            const row = btn.closest('tr');
+            row.remove();
+            reindexTable();
+            updateRisetSummary();
+        }
+
+        function reindexTable() {
+            const rows = document.querySelectorAll('#tabelRisetBody tr');
+            rows.forEach((row, idx) => {
+                row.children[0].textContent = idx + 1;
+            });
+        }
+
+        function updateRisetSummary() {
+            const counts = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+            const rows = document.querySelectorAll('#tabelRisetBody tr');
+
+            rows.forEach(row => {
+                const silaBadge = row.children[2].querySelector('span');
+                if (silaBadge) {
+                    const text = silaBadge.textContent;
+                    const numMatch = text.match(/\d/);
+                    if (numMatch) {
+                        const n = numMatch[0];
+                        if (counts[n] !== undefined) counts[n]++;
                     }
                 }
             });
 
-            // Toggle top home button
-            const homeBtn = document.getElementById('btn-home-nav');
-            if (pageId === 'home') {
-                homeBtn.classList.add('hidden');
-            } else {
-                homeBtn.classList.remove('hidden');
-            }
-
-            // Scroll smoothly to top
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // Switch Linuris Inner Tabs (Literasi, Numerasi, Riset)
-        function switchLinurisTab(tabName) {
-            const tabs = ['literasi', 'numerasi', 'riset'];
-            tabs.forEach(t => {
-                const tabBtn = document.getElementById('tab-' + t);
-                const contentEl = document.getElementById('content-' + t);
-
-                if (t === tabName) {
-                    tabBtn.className = 'active-tab py-2 px-4 font-bold text-sm rounded-t-lg transition flex items-center gap-2';
-                    contentEl.classList.remove('hidden');
-                } else {
-                    tabBtn.className = 'text-slate-500 py-2 px-4 font-bold text-sm rounded-t-lg transition flex items-center gap-2';
-                    contentEl.classList.add('hidden');
-                }
-            });
-        }
-
-        // Multiple Choice Quiz Checker with Feedback
-        function checkAnswer(questionId, optionKey, isCorrect, btnElement) {
-            const buttons = document.querySelectorAll('.btn-' + questionId);
-            const feedbackEl = document.getElementById('feedback-' + questionId);
-
-            buttons.forEach(b => {
-                b.classList.remove('border-brandGreen', 'bg-green-100', 'border-red-500', 'bg-red-100', 'text-green-800', 'text-red-800');
-            });
-
-            feedbackEl.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
-
-            if (isCorrect) {
-                btnElement.classList.add('border-brandGreen', 'bg-green-100', 'text-green-800');
-                feedbackEl.classList.add('bg-green-100', 'text-green-800');
-                feedbackEl.innerHTML = '<i class="fa-solid fa-circle-check text-base mr-1"></i> Hebat Sekali! Jawaban kamu benar! 🌟';
-                
-                // Trigger celebratory confetti
-                try {
-                    confetti({
-                        particleCount: 50,
-                        spread: 60,
-                        origin: { y: 0.7 }
-                    });
-                } catch(e) {}
-            } else {
-                btnElement.classList.add('border-red-500', 'bg-red-100', 'text-red-800');
-                feedbackEl.classList.add('bg-red-100', 'text-red-800');
-                feedbackEl.innerHTML = '<i class="fa-solid fa-circle-xmark text-base mr-1"></i> Kurang tepat, ayo coba lagi ya!';
-            }
-        }
-
-        // Riset Table Operations
-        function addSurveyRow() {
-            const tbody = document.getElementById('table-riset-body');
-            const rowCount = tbody.children.length + 1;
-
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td class="p-3 text-center font-bold text-slate-500">${rowCount}</td>
-                <td class="p-3">
-                    <input type="text" placeholder="Nama Teman" class="w-full p-2 rounded-xl border border-slate-300 font-semibold focus:outline-none focus:border-brandBlue">
-                </td>
-                <td class="p-3">
-                    <select onchange="calculateSurvey()" class="select-sila w-full p-2 rounded-xl border border-slate-300 font-semibold focus:outline-none focus:border-brandBlue bg-slate-50">
-                        <option value="1">Sila 1 (Bintang)</option>
-                        <option value="2">Sila 2 (Rantai)</option>
-                        <option value="3">Sila 3 (Pohon)</option>
-                        <option value="4">Sila 4 (Banteng)</option>
-                        <option value="5">Sila 5 (Padi Kapas)</option>
-                    </select>
-                </td>
-                <td class="p-3 text-center">
-                    <button onclick="deleteRow(this)" class="text-red-500 hover:text-red-700 p-2"><i class="fa-solid fa-trash"></i></button>
-                </td>
-            `;
-            tbody.appendChild(tr);
-            calculateSurvey();
-        }
-
-        function deleteRow(btn) {
-            const row = btn.closest('tr');
-            row.remove();
-
-            // Recalculate numbers
-            const tbody = document.getElementById('table-riset-body');
-            Array.from(tbody.children).forEach((tr, idx) => {
-                tr.children[0].textContent = idx + 1;
-            });
-
-            calculateSurvey();
-        }
-
-        function calculateSurvey() {
-            const selects = document.querySelectorAll('.select-sila');
-            const counts = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
-
-            selects.forEach(select => {
-                const val = select.value;
-                if (counts[val] !== undefined) {
-                    counts[val]++;
-                }
-            });
-
             for (let i = 1; i <= 5; i++) {
-                document.getElementById('count-sila-' + i).textContent = counts[i];
+                const elem = document.getElementById(`countSila${i}`);
+                if (elem) elem.textContent = counts[i];
             }
         }
 
-        // Initialize calculations on page load
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Initialize table counts on load
         window.onload = function() {
-            calculateSurvey();
+            updateRisetSummary();
         };
     </script>
 </body>
